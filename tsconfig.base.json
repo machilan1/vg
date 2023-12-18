@@ -17,6 +17,7 @@
     "paths": {
       "@vg/api": ["apps/api/src/index.ts"],
       "@vg/auth": ["libs/api/auth/src/index.ts"],
+      "@vg/categories": ["libs/api/categories/src/index.ts"],
       "@vg/database": ["libs/api/database/src/index.ts"],
       "@vg/products": ["libs/api/products/src/index.ts"]
     }

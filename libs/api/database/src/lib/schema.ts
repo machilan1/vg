@@ -1,5 +1,6 @@
 import { InferInsertModel, InferSelectModel } from 'drizzle-orm';
 import {
+  boolean,
   bigserial,
   integer,
   pgTable,
@@ -12,6 +13,10 @@ export const user = pgTable('app_user', {
   name: varchar('name', { length: 64 }).notNull(),
   email: varchar('email', { length: 64 }).notNull().unique(),
   password: varchar('password', { length: 64 }).notNull(),
+  address: varchar('address', { length: 255 }).notNull(),
+  phone: varchar('phone', { length: 64 }).notNull(),
+  uniCode: varchar('uni_code', { length: 255 }).notNull().unique(),
+  isAdmin: boolean('is_admin'),
   createdAt: timestamp('created_at', { withTimezone: true })
     .defaultNow()
     .notNull(),
@@ -19,26 +24,6 @@ export const user = pgTable('app_user', {
 
 export type SelectUser = InferSelectModel<typeof user>;
 export type InsertUser = InferInsertModel<typeof user>;
-
-export const admin = pgTable('admin', {
-  adminId: integer('admin_id')
-    .references(() => user.userId)
-    .primaryKey()
-    .notNull(),
-  assignedAt: timestamp('assigned_at', { withTimezone: true })
-    .defaultNow()
-    .notNull(),
-});
-
-export const seller = pgTable('seller', {
-  sellerId: integer('seller_id')
-    .references(() => user.userId)
-    .primaryKey()
-    .notNull(),
-  address: varchar('address', { length: 255 }).notNull(),
-  phone: varchar('phone', { length: 64 }).notNull(),
-  uniCode: varchar('uni_code', { length: 255 }).notNull().unique(),
-});
 
 export const category = pgTable('category', {
   categoryId: bigserial('category_id', { mode: 'number' })
