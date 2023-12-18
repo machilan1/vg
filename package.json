@@ -4,7 +4,7 @@
   "license": "MIT",
   "scripts": {
     "oai": "ng-openapi-gen --input openapi.json --output libs/shared/src/lib --indexFile=true",
-    "generate:migration": "npx drizzle-kit generate:pg --config=./apps/api/libs/shared/src/lib/drizzle/config.ts ",
+    "generate:migration": "npx drizzle-kit generate:pg --config=./libs/api/database/src/lib/config.ts ",
     "migrate": "npx tsx ./apps/api/libs/shared/src/lib/drizzle/migrate.ts"
   },
   "private": true,
@@ -28,6 +28,7 @@
     "axios": "^1.0.0",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.0",
+    "dotenv": "^16.3.1",
     "drizzle-orm": "^0.29.1",
     "pg": "^8.11.3",
     "postgres": "^3.4.3",
