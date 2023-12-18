@@ -26,6 +26,7 @@
     "@nx/angular": "v17.2.5",
     "@nx/nest": "^17.2.6",
     "axios": "^1.0.0",
+    "class-transformer": "^0.5.1",
     "class-validator": "^0.14.0",
     "drizzle-orm": "^0.29.1",
     "pg": "^8.11.3",
