@@ -1,10 +1,18 @@
-import { Component } from '@angular/core';
+import {
+  Component,
+  Injector,
+  Input,
+  inject,
+  runInInjectionContext,
+} from '@angular/core';
 import {
   FormControl,
   FormGroup,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { AdminStateService } from './admin-state.service';
+import { JsonPipe } from '@angular/common';
 
 @Component({
   selector: 'vg-admin-seller-edit',
@@ -62,7 +70,7 @@ import {
   `,
   styles: [``],
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, JsonPipe],
 })
 export class AdminSellerEditComponent {
   form = new FormGroup({

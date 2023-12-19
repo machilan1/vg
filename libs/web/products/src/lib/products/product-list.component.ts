@@ -1,4 +1,11 @@
-import { Component, Input, inject, signal } from '@angular/core';
+import {
+  Component,
+  Injector,
+  Input,
+  inject,
+  runInInjectionContext,
+  signal,
+} from '@angular/core';
 
 import { ProductCardComponent } from './product-card.component';
 import { RouterLink, RouterLinkActive } from '@angular/router';

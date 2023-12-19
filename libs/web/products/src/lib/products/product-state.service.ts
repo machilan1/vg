@@ -32,4 +32,16 @@ export class ProductStateService {
       queryFn: () => firstValueFrom(this.#categoriesService.findCategories()),
     }));
   }
+
+  getProductById(productId: Signal<string>) {
+    return injectQuery(() => ({
+      queryKey: ['products', { productId: productId() }],
+      queryFn: () =>
+        firstValueFrom(
+          this.#productsService.getProductById({
+            productId: Number(productId()),
+          }),
+        ),
+    }));
+  }
 }

@@ -16,7 +16,7 @@ export const ADMIN_ROUTES: Route[] = [
         component: AdminSellersComponent,
       },
       {
-        path: 'edit',
+        path: 'seller/:userId',
         component: AdminSellerEditComponent,
       },
       {
@@ -24,11 +24,11 @@ export const ADMIN_ROUTES: Route[] = [
         component: AdminProductsComponent,
       },
       {
-        path: 'product',
+        path: 'products/:productId',
         component: AdminProductComponent,
       },
       {
-        path: 'product/edit',
+        path: 'products/:productId/edit',
         component: AdminProductEditComponent,
       },
     ],

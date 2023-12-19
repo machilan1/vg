@@ -61,26 +61,25 @@ import { RouterLink } from '@angular/router';
           </button>
         </div>
         <ng-container formArrayName="histories">
-          @for ( history of histories.controls; track history; let i = $index )
-          {
-          <div class="flex gap-6">
-            <div class="flex gap-4 pt-2" [formGroupName]="i">
-              <label>日期</label>
-              <input
-                formControlName="date"
-                type="text"
-                class="border border-green-800  bg-green-50 rounded-md"
-              />
+          @for (history of histories.controls; track history; let i = $index) {
+            <div class="flex gap-6">
+              <div class="flex gap-4 pt-2" [formGroupName]="i">
+                <label>日期</label>
+                <input
+                  formControlName="date"
+                  type="text"
+                  class="border border-green-800  bg-green-50 rounded-md"
+                />
+              </div>
+              <div class="flex gap-4 pt-2" [formGroupName]="i">
+                <label>價錢</label>
+                <input
+                  formControlName="price"
+                  type="text"
+                  class="border border-green-800  bg-green-50 rounded-md"
+                />
+              </div>
             </div>
-            <div class="flex gap-4 pt-2" [formGroupName]="i">
-              <label>價錢</label>
-              <input
-                formControlName="price"
-                type="text"
-                class="border border-green-800  bg-green-50 rounded-md"
-              />
-            </div>
-          </div>
           }
         </ng-container>
       </div>
@@ -89,10 +88,11 @@ import { RouterLink } from '@angular/router';
           type="submit"
           class="bg-green-800 text-white rounded-md w-fit px-4 py-1 text-sm"
         >
-          儲存</button
-        ><a
-          routerLink="/admin/product"
-          type="submit"
+          儲存
+        </button>
+        <!-- TODO: router back to the productID -->
+        <a
+          routerLink=".."
           class="border-green-800 border rounded-md w-fit px-4 py-1 text-sm"
         >
           取消
@@ -119,7 +119,7 @@ export class AdminProductEditComponent {
       new FormGroup({
         date: new FormControl('', Validators.required),
         price: new FormControl('', Validators.required),
-      })
+      }),
     );
   }
 
