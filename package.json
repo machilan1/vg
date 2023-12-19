@@ -76,6 +76,7 @@
     "jest-environment-node": "^29.4.1",
     "jest-preset-angular": "~13.1.4",
     "jsonc-eslint-parser": "^2.1.0",
+    "ng-openapi-gen": "^0.51.0",
     "nx": "v17.2.5",
     "prettier": "^2.6.2",
     "react-refresh": "^0.10.0",

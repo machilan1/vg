@@ -6,16 +6,13 @@ import {
   Param,
   ParseIntPipe,
   Patch,
-  Type,
 } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
-  ApiFoundResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
   ApiOperation,
   ApiTags,
-  PartialType,
 } from '@nestjs/swagger';
 import { User } from '../entities/user.entity';
 import { UsersService } from './users.service';
@@ -50,7 +47,7 @@ export class UsersController {
     @Param('userId', ParseIntPipe) userId: number,
     @Body() updateUserDto: UpdateUserDto
   ) {
-    throw new Error('not implemented');
+    return this.usersService.update(userId, updateUserDto);
   }
 
   @Delete(':userId')
@@ -58,6 +55,6 @@ export class UsersController {
   @ApiOkResponse()
   @ApiBadRequestResponse()
   delete(@Param('userId', ParseIntPipe) userId: number) {
-    throw new Error('not implemented');
+    return this.usersService.delete(userId);
   }
 }
