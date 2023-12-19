@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { DatabaseModule } from '@vg/database';
+import { DatabaseModule } from '@vg/api-database';
 
 @Module({
   controllers: [],

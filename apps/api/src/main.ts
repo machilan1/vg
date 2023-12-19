@@ -28,8 +28,7 @@ async function bootstrap() {
   const configService = app.get(ConfigService);
 
   const config = new DocumentBuilder()
-    .setTitle('Catty Course Api')
-    .setDescription('The cats API description')
+    .setTitle('Veggies Api')
     .setVersion('1.0')
     .build();
 

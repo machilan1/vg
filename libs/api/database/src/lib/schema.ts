@@ -15,8 +15,8 @@ export const user = pgTable('app_user', {
   password: varchar('password', { length: 64 }).notNull(),
   address: varchar('address', { length: 255 }).notNull(),
   phone: varchar('phone', { length: 64 }).notNull(),
-  uniCode: varchar('uni_code', { length: 255 }).notNull().unique(),
-  isAdmin: boolean('is_admin'),
+  taxId: varchar('tax_id', { length: 255 }).notNull().unique(),
+  isAdmin: boolean('is_admin').default(false),
   createdAt: timestamp('created_at', { withTimezone: true })
     .defaultNow()
     .notNull(),
@@ -34,6 +34,9 @@ export const category = pgTable('category', {
     .defaultNow()
     .notNull(),
 });
+
+export type SelectCategory = InferSelectModel<typeof category>;
+export type InsertCategory = InferInsertModel<typeof category>;
 
 export const product = pgTable('product', {
   productId: bigserial('product_id', { mode: 'number' }).primaryKey().notNull(),

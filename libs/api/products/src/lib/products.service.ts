@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { Database, PG_CONNECTION, product } from '@vg/database';
+import { Database, PG_CONNECTION, product } from '@vg/api-database';
 
 @Injectable()
 export class ProductsService {

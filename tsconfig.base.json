@@ -16,10 +16,12 @@
     "baseUrl": ".",
     "paths": {
       "@vg/api": ["apps/api/src/index.ts"],
-      "@vg/auth": ["libs/api/auth/src/index.ts"],
-      "@vg/categories": ["libs/api/categories/src/index.ts"],
-      "@vg/database": ["libs/api/database/src/index.ts"],
-      "@vg/products": ["libs/api/products/src/index.ts"]
+      "@vg/api-auth": ["libs/api/auth/src/index.ts"],
+      "@vg/api-categories": ["libs/api/categories/src/index.ts"],
+      "@vg/api-database": ["libs/api/database/src/index.ts"],
+      "@vg/api-products": ["libs/api/products/src/index.ts"],
+      "@vg/shared-constants": ["libs/shared/constants/src/index.ts"],
+      "@vg/api-users": ["libs/api/users/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
