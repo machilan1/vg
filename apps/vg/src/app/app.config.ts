@@ -1,3 +1,4 @@
+import { ApiConfiguration } from './../../../../libs/shared/src/lib/api-configuration';
 import { ApplicationConfig } from '@angular/core';
 import {
   PreloadAllModules,
@@ -21,8 +22,17 @@ export const appConfig: ApplicationConfig = {
       }),
       withInMemoryScrolling({
         scrollPositionRestoration: 'enabled',
-      })
+      }),
     ),
     provideHttpClient(withFetch()),
+
+    // TODO: set codegen config - api base url (1. mock server / 2. development server)
+
+    {
+      provide: ApiConfiguration,
+      useValue: {
+        rootUrl: 'http://127.0.0.1:4010',
+      },
+    },
   ],
 };
