@@ -12,6 +12,8 @@ export class Product {
 
   name!: string;
 
+  image!: string;
+
   seller!: User;
 
   records!: Record[];

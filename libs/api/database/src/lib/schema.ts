@@ -1,4 +1,4 @@
-import { InferInsertModel, InferSelectModel } from 'drizzle-orm';
+import { InferInsertModel, InferSelectModel, relations } from 'drizzle-orm';
 import {
   boolean,
   bigserial,
@@ -53,13 +53,25 @@ export const product = pgTable('product', {
     .notNull(),
 });
 
-export type SelectProduct = InferSelectModel<typeof category>;
-export type InsertProduct = InferInsertModel<typeof category>;
+export type SelectProduct = InferSelectModel<typeof product>;
+export type InsertProduct = InferInsertModel<typeof product>;
+
+export const productRelations = relations(product, ({ one, many }) => ({
+  seller: one(user, {
+    fields: [product.userId],
+    references: [user.userId],
+  }),
+  category: one(category, {
+    fields: [product.categoryId],
+    references: [category.categoryId],
+  }),
+  records: many(record),
+}));
 
 export const record = pgTable('record', {
   recordId: bigserial('record_id', { mode: 'number' }).primaryKey().notNull(),
   productId: integer('product_id')
-    .references(() => product.productId)
+    .references(() => product.productId, { onDelete: 'cascade' })
     .notNull(),
   trackNumber: varchar('track_number', { length: 255 }).notNull().unique(),
   unitOfMeasure: varchar('unit_of_measure', { length: 64 }).notNull(),
@@ -68,3 +80,13 @@ export const record = pgTable('record', {
     .defaultNow()
     .notNull(),
 });
+
+export type SelectRecord = InferSelectModel<typeof record>;
+export type InsertRecord = InferInsertModel<typeof record>;
+
+export const recordRelations = relations(record, ({ one }) => ({
+  product: one(product, {
+    fields: [record.productId],
+    references: [product.productId],
+  }),
+}));
