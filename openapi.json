@@ -637,8 +637,8 @@
           "productId": {
             "type": "number"
           },
-          "categoryId": {
-            "type": "number"
+          "category": {
+            "$ref": "#/components/schemas/Category"
           },
           "name": {
             "type": "string"
@@ -659,7 +659,7 @@
         },
         "required": [
           "productId",
-          "categoryId",
+          "category",
           "name",
           "seller",
           "records",

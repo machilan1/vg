@@ -3,11 +3,12 @@ import { record } from '../../../../database/src/lib/schema';
 import { ApiProperty } from '@nestjs/swagger';
 import { SelectProduct } from '@vg/api-database';
 import { User } from 'libs/api/users/src/entities/user.entity';
+import { Category } from 'libs/api/categories/src/entities/select-category.entity';
 
 export class Product {
   productId!: number;
 
-  categoryId!: number;
+  category!: Category;
 
   name!: string;
 
