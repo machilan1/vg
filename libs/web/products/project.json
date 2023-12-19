@@ -1,5 +1,5 @@
 {
-  "name": "products",
+  "name": "web-products",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/web/products/src",
   "prefix": "vg",

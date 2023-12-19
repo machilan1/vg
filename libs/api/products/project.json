@@ -1,5 +1,5 @@
 {
-  "name": "products",
+  "name": "api-products",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/api/products/src",
   "projectType": "library",
