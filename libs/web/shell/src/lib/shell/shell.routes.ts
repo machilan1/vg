@@ -25,7 +25,7 @@ export const SHELL_ROUTES: Route[] = [
           import('@vg/products').then((m) => m.ProductsComponent),
       },
       {
-        path: 'products/product',
+        path: 'products/:productId',
         loadComponent: () =>
           import('@vg/products').then((m) => m.ProductComponent),
       },
