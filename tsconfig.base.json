@@ -20,8 +20,9 @@
       "@vg/api-categories": ["libs/api/categories/src/index.ts"],
       "@vg/api-database": ["libs/api/database/src/index.ts"],
       "@vg/api-products": ["libs/api/products/src/index.ts"],
-      "@vg/shared-constants": ["libs/shared/constants/src/index.ts"],
-      "@vg/api-users": ["libs/api/users/src/index.ts"]
+      "@vg/api-records": ["libs/api/records/src/index.ts"],
+      "@vg/api-users": ["libs/api/users/src/index.ts"],
+      "@vg/shared-constants": ["libs/shared/constants/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

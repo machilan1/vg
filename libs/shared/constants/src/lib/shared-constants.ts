@@ -1,2 +1,2 @@
-export const MAX_CATEGORY_STR_LENGTH = 10;
-export const MIN_CATEGORY_STR_LENGTH = 1;
+export const MAX_CATEGORY_NAME_LENGTH = 10;
+export const MIN_CATEGORY_NAME_LENGTH = 1;
