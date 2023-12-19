@@ -3,6 +3,7 @@ import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
 import { AuthResponse } from '../entities/auth-response.entity';
 import { LoginDto } from '../dtos/login.dto';
+import { RegisterDto } from '../dtos/register.dto';
 import { FindMeResponse } from '../entities/find-me-response.entity';
 
 @ApiTags('auth')

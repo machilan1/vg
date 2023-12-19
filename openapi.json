@@ -41,7 +41,7 @@
           }
         },
         "responses": {
-          "302": {
+          "200": {
             "description": "",
             "content": {
               "application/json": {
@@ -73,12 +73,34 @@
           }
         },
         "responses": {
-          "302": {
+          "200": {
             "description": "",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/AuthResponse"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "auth"
+        ]
+      }
+    },
+    "/auth/me": {
+      "get": {
+        "operationId": "findMe",
+        "summary": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FindMeResponse"
                 }
               }
             }
@@ -231,6 +253,47 @@
         "required": [
           "email",
           "password"
+        ]
+      },
+      "FindMeResponse": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "number"
+          },
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "address": {
+            "type": "string"
+          },
+          "phone": {
+            "type": "string"
+          },
+          "taxId": {
+            "type": "string"
+          },
+          "isAdmin": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "createdAt": {
+            "format": "date-time",
+            "type": "string"
+          }
+        },
+        "required": [
+          "userId",
+          "name",
+          "email",
+          "address",
+          "phone",
+          "taxId",
+          "isAdmin",
+          "createdAt"
         ]
       },
       "User": {
