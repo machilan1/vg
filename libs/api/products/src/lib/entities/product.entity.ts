@@ -16,8 +16,6 @@ export class Product {
 
   seller!: User;
 
-  price!: number;
-
   records!: Record[];
 
   createdAt!: Date;

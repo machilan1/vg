@@ -3,7 +3,8 @@
   "paths": {
     "/categories": {
       "get": {
-        "operationId": "CategoriesController_find",
+        "operationId": "findCategories",
+        "summary": "",
         "parameters": [],
         "responses": {
           "200": {
@@ -18,9 +19,6 @@
                 }
               }
             }
-          },
-          "404": {
-            "description": ""
           }
         },
         "tags": [
@@ -861,9 +859,6 @@
           "seller": {
             "$ref": "#/components/schemas/User"
           },
-          "price": {
-            "type": "number"
-          },
           "records": {
             "type": "array",
             "items": {
@@ -881,7 +876,6 @@
           "name",
           "image",
           "seller",
-          "price",
           "records",
           "createdAt"
         ]
@@ -934,25 +928,24 @@
       "CreateRecordDto": {
         "type": "object",
         "properties": {
-          "date": {
-            "format": "date-time",
-            "type": "string"
+          "productId": {
+            "type": "number"
           },
           "trackNumber": {
-            "type": "number"
-          },
-          "unitPrice": {
-            "type": "number"
+            "type": "string"
           },
           "unitOfMeasure": {
             "type": "string"
+          },
+          "unitPrice": {
+            "type": "number"
           }
         },
         "required": [
-          "date",
+          "productId",
           "trackNumber",
-          "unitPrice",
-          "unitOfMeasure"
+          "unitOfMeasure",
+          "unitPrice"
         ]
       },
       "UpdateRecordDto": {
