@@ -12,7 +12,11 @@ export class Product {
 
   name!: string;
 
+  image!: string;
+
   seller!: User;
+
+  price!: number;
 
   records!: Record[];
 

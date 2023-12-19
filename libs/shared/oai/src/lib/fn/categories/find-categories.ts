@@ -8,11 +8,11 @@ import { RequestBuilder } from '../../request-builder';
 
 import { Category } from '../../models/category';
 
-export interface CategoriesControllerFind$Params {
+export interface FindCategories$Params {
 }
 
-export function categoriesControllerFind(http: HttpClient, rootUrl: string, params?: CategoriesControllerFind$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<Category>>> {
-  const rb = new RequestBuilder(rootUrl, categoriesControllerFind.PATH, 'get');
+export function findCategories(http: HttpClient, rootUrl: string, params?: FindCategories$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<Category>>> {
+  const rb = new RequestBuilder(rootUrl, findCategories.PATH, 'get');
   if (params) {
   }
 
@@ -26,4 +26,4 @@ export function categoriesControllerFind(http: HttpClient, rootUrl: string, para
   );
 }
 
-categoriesControllerFind.PATH = '/categories';
+findCategories.PATH = '/categories';

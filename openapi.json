@@ -3,7 +3,8 @@
   "paths": {
     "/categories": {
       "get": {
-        "operationId": "CategoriesController_find",
+        "operationId": "findCategories",
+        "summary": "",
         "parameters": [],
         "responses": {
           "200": {
@@ -799,8 +800,14 @@
           "name": {
             "type": "string"
           },
+          "image": {
+            "type": "string"
+          },
           "seller": {
             "$ref": "#/components/schemas/User"
+          },
+          "price": {
+            "type": "number"
           },
           "records": {
             "type": "array",
@@ -817,7 +824,9 @@
           "productId",
           "category",
           "name",
+          "image",
           "seller",
+          "price",
           "records",
           "createdAt"
         ]

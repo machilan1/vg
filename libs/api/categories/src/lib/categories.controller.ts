@@ -1,5 +1,5 @@
 import { Controller, Get } from '@nestjs/common';
-import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { CategoriesService } from './categories.service';
 
 import { Category } from '../entities/select-category.entity';
@@ -10,6 +10,7 @@ export class CategoriesController {
   constructor(private readonly categoriesService: CategoriesService) {}
 
   @Get()
+  @ApiOperation({ operationId: 'findCategories' })
   @ApiOkResponse({ type: [Category] })
   find() {
     return this.categoriesService.find();

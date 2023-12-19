@@ -9,9 +9,9 @@ import { BaseService } from '../base-service';
 import { ApiConfiguration } from '../api-configuration';
 import { StrictHttpResponse } from '../strict-http-response';
 
-import { categoriesControllerFind } from '../fn/categories/categories-controller-find';
-import { CategoriesControllerFind$Params } from '../fn/categories/categories-controller-find';
 import { Category } from '../models/category';
+import { findCategories } from '../fn/categories/find-categories';
+import { FindCategories$Params } from '../fn/categories/find-categories';
 
 @Injectable({ providedIn: 'root' })
 export class CategoriesService extends BaseService {
@@ -19,27 +19,27 @@ export class CategoriesService extends BaseService {
     super(config, http);
   }
 
-  /** Path part for operation `categoriesControllerFind()` */
-  static readonly CategoriesControllerFindPath = '/categories';
+  /** Path part for operation `findCategories()` */
+  static readonly FindCategoriesPath = '/categories';
 
   /**
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
-   * To access only the response body, use `categoriesControllerFind()` instead.
+   * To access only the response body, use `findCategories()` instead.
    *
    * This method doesn't expect any request body.
    */
-  categoriesControllerFind$Response(params?: CategoriesControllerFind$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<Category>>> {
-    return categoriesControllerFind(this.http, this.rootUrl, params, context);
+  findCategories$Response(params?: FindCategories$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<Category>>> {
+    return findCategories(this.http, this.rootUrl, params, context);
   }
 
   /**
    * This method provides access only to the response body.
-   * To access the full response (for headers, for example), `categoriesControllerFind$Response()` instead.
+   * To access the full response (for headers, for example), `findCategories$Response()` instead.
    *
    * This method doesn't expect any request body.
    */
-  categoriesControllerFind(params?: CategoriesControllerFind$Params, context?: HttpContext): Observable<Array<Category>> {
-    return this.categoriesControllerFind$Response(params, context).pipe(
+  findCategories(params?: FindCategories$Params, context?: HttpContext): Observable<Array<Category>> {
+    return this.findCategories$Response(params, context).pipe(
       map((r: StrictHttpResponse<Array<Category>>): Array<Category> => r.body)
     );
   }
