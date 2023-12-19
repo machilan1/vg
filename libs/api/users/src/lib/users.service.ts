@@ -38,6 +38,7 @@ export class UsersService {
 
     return res[0];
   }
+
   update() {}
   delete() {}
 }

@@ -1,12 +1,7 @@
-import { Body, Controller, Get } from '@nestjs/common';
-import {
-  ApiCreatedResponse,
-  ApiOkResponse,
-  ApiOperation,
-  ApiTags,
-} from '@nestjs/swagger';
+import { Controller, Get } from '@nestjs/common';
+import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { CategoriesService } from './categories.service';
-import { CreateCategoryDto } from '../dtos/create-category.dto';
+
 import { Category } from '../entities/select-category.entity';
 
 @ApiTags('categories')
