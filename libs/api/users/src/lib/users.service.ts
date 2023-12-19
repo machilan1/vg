@@ -2,6 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { PG_CONNECTION, Database, user } from '@vg/api-database';
 import { eq } from 'drizzle-orm';
 import { UpdateUserDto } from '../dtos/update-user.dto';
+import { emit } from 'process';
 
 @Injectable()
 export class UsersService {
@@ -39,6 +40,14 @@ export class UsersService {
       .where(eq(user.userId, userId));
 
     return res[0];
+  }
+
+  async findOneByEmail(email: string) {
+    const [res] = await this.conn
+      .select()
+      .from(user)
+      .where(eq(user.email, email));
+    return res;
   }
 
   async update(userId: number, updateUserDto: UpdateUserDto) {

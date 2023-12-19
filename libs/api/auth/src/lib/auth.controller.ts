@@ -1,10 +1,11 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post, Query } from '@nestjs/common';
 import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
-import { AuthResponse } from '../entities/auth-response.entity';
-import { LoginDto } from '../dtos/login.dto';
-import { RegisterDto } from '../dtos/register.dto';
-import { FindMeResponse } from '../entities/find-me-response.entity';
+import { AuthResponse } from './responses/auth.response';
+import { LoginDto } from './dtos/login.dto';
+import { RegisterDto } from './dtos/register.dto';
+import { FindMeResponse } from './responses/find-me.response';
+import { FindMeQueryParamDto } from './dtos/find-me-qeury.dto';
 
 @ApiTags('auth')
 @Controller('auth')
@@ -15,20 +16,20 @@ export class AuthController {
   @ApiOperation({ operationId: 'register' })
   @ApiOkResponse({ type: AuthResponse })
   register(@Body() registerDto: RegisterDto) {
-    throw new Error('no implemented');
+    return this.authService.register(registerDto);
   }
 
   @Post('login')
   @ApiOperation({ operationId: 'login' })
   @ApiOkResponse({ type: AuthResponse })
   login(@Body() loginDto: LoginDto) {
-    throw new Error('no implemented');
+    return this.authService.login(loginDto);
   }
 
   @Get('me')
   @ApiOperation({ operationId: 'findMe' })
   @ApiOkResponse({ type: FindMeResponse })
-  findMe() {
-    throw new Error('no implemented');
+  findMe(@Query() params: FindMeQueryParamDto): Promise<FindMeResponse> {
+    return this.authService.findMe(params);
   }
 }
