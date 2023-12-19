@@ -69,7 +69,7 @@ export class ProductsController {
   @ApiOperation({ operationId: 'updateProduct' })
   update(
     @Param('productId') productId: number,
-    @Body() body: UpdateProductDto
+    @Body() body: UpdateProductDto,
   ): Promise<Product> {
     throw new Error('no implemented');
     // return this.productsService.update(id, body);

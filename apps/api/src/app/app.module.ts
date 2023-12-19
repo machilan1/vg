@@ -7,6 +7,7 @@ import { CategoriesModule } from '@vg/api-categories';
 import { AuthModule } from '@vg/api-auth';
 import { UsersModule } from '@vg/api-users';
 import { ProductsModule } from '@vg/api-products';
+import { RecordsModule } from '@vg/api-records';
 
 @Module({
   controllers: [],
@@ -18,6 +19,7 @@ import { ProductsModule } from '@vg/api-products';
     AuthModule,
     UsersModule,
     ProductsModule,
+    RecordsModule,
     ConfigModule.forRoot({ isGlobal: true }),
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, 'upload'),

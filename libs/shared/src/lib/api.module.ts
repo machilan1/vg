@@ -8,6 +8,7 @@ import { CategoriesService } from './services/categories.service';
 import { AuthService } from './services/auth.service';
 import { UsersService } from './services/users.service';
 import { ProductsService } from './services/products.service';
+import { RecordsService } from './services/records.service';
 
 /**
  * Module that provides all services and configuration.
@@ -21,6 +22,7 @@ import { ProductsService } from './services/products.service';
     AuthService,
     UsersService,
     ProductsService,
+    RecordsService,
     ApiConfiguration
   ],
 })

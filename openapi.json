@@ -401,6 +401,162 @@
           "products"
         ]
       }
+    },
+    "/records": {
+      "get": {
+        "operationId": "getRecords",
+        "summary": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Record"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No products found"
+          }
+        },
+        "tags": [
+          "records"
+        ]
+      },
+      "post": {
+        "operationId": "createRecord",
+        "summary": "",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateRecordDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Record"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          }
+        },
+        "tags": [
+          "records"
+        ]
+      }
+    },
+    "/records/{recordId}": {
+      "get": {
+        "operationId": "getRecordById",
+        "summary": "",
+        "parameters": [
+          {
+            "name": "recordId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Record"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Record not found"
+          }
+        },
+        "tags": [
+          "records"
+        ]
+      },
+      "patch": {
+        "operationId": "updateRecord",
+        "summary": "",
+        "parameters": [
+          {
+            "name": "recordId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateRecordDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Record"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "records"
+        ]
+      },
+      "delete": {
+        "operationId": "deleteRecord",
+        "summary": "",
+        "parameters": [
+          {
+            "name": "recordId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "records"
+        ]
+      }
     }
   },
   "info": {
@@ -705,6 +861,48 @@
             "items": {
               "type": "string"
             }
+          }
+        }
+      },
+      "CreateRecordDto": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "trackNumber": {
+            "type": "number"
+          },
+          "unitPrice": {
+            "type": "number"
+          },
+          "unitOfMeasure": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "date",
+          "trackNumber",
+          "unitPrice",
+          "unitOfMeasure"
+        ]
+      },
+      "UpdateRecordDto": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "trackNumber": {
+            "type": "number"
+          },
+          "unitPrice": {
+            "type": "number"
+          },
+          "unitOfMeasure": {
+            "type": "string"
           }
         }
       }
