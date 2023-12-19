@@ -19,7 +19,7 @@ export class AuthController {
   }
 
   @Post('login')
-  @ApiOperation({ operationId: 'register' })
+  @ApiOperation({ operationId: 'login' })
   @ApiOkResponse({ type: AuthResponse })
   login(@Body() loginDto: LoginDto) {
     throw new Error('no implemented');

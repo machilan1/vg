@@ -53,6 +53,9 @@ export const product = pgTable('product', {
     .notNull(),
 });
 
+export type SelectProduct = InferSelectModel<typeof category>;
+export type InsertProduct = InferInsertModel<typeof category>;
+
 export const record = pgTable('record', {
   recordId: bigserial('record_id', { mode: 'number' }).primaryKey().notNull(),
   productId: integer('product_id')

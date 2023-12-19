@@ -2,7 +2,9 @@ import { ApiProperty } from '@nestjs/swagger';
 import { SelectUser } from '@vg/api-database';
 
 export class User {
+  @ApiProperty({ type: Number })
   userId!: number;
+  
   @ApiProperty({ type: String })
   name!: string;
 

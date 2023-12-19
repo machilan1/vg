@@ -5,7 +5,8 @@
   "scripts": {
     "oai": "ng-openapi-gen --input openapi.json --output libs/shared/src/lib --indexFile=true",
     "generate:migration": "npx drizzle-kit generate:pg --config=./libs/api/database/src/lib/config.ts ",
-    "migrate": "npx tsx ./apps/api/libs/shared/src/lib/drizzle/migrate.ts"
+    "migrate": "npx tsx ./apps/api/libs/shared/src/lib/drizzle/migrate.ts",
+    "mock": "prism mock openapi.json"
   },
   "private": true,
   "dependencies": {
@@ -26,6 +27,7 @@
     "@nestjs/swagger": "^7.1.17",
     "@nx/angular": "v17.2.5",
     "@nx/nest": "^17.2.6",
+    "@stoplight/prism-cli": "^5.5.2",
     "axios": "^1.0.0",
     "bcrypt": "^5.1.1",
     "class-transformer": "^0.5.1",
