@@ -1,6 +1,6 @@
 export class CreateRecordDto {
-  date!: Date;
-  trackNumber!: number;
-  unitPrice!: number;
+  productId!: number;
+  trackNumber!: string;
   unitOfMeasure!: string;
+  unitPrice!: number;
 }

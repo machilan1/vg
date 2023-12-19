@@ -1,11 +1,9 @@
-import { IsString, MaxLength, MinLength } from 'class-validator';
+import { CreateRecordDto } from '@vg/api-records';
 
 export class CreateProductDto {
-  categoryId!: number;
-
+  userId!: number;
   name!: string;
-
-  // seller!: string;
-
-  records!: string[];
+  image!: string;
+  categoryId!: number;
+  records: Pick<CreateRecordDto, 'unitOfMeasure' | 'unitPrice'>[] = [];
 }

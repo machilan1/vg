@@ -1,5 +1,4 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { SelectUser } from '@vg/api-database';
 
 export class FindMeResponse {
   @ApiProperty({ type: Number })

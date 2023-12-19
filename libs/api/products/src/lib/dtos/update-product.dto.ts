@@ -1,8 +1,7 @@
-import { category } from '@vg/api-database';
+import { CreateRecordDto } from '@vg/api-records';
+
 export class UpdateProductDto {
-  name?: string;
   categoryId?: number;
-  // seller
-  price?: number;
-  records?: string[];
+  name?: string;
+  image?: string;
 }
