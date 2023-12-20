@@ -4,7 +4,7 @@ import { SelectUser } from '@vg/api-database';
 export class User {
   @ApiProperty({ type: Number })
   userId!: number;
-  
+
   @ApiProperty({ type: String })
   name!: string;
 
@@ -25,4 +25,8 @@ export class User {
 
   @ApiProperty({ type: Date })
   createdAt!: Date;
+
+  constructor(data: User) {
+    Object.assign(this, data);
+  }
 }

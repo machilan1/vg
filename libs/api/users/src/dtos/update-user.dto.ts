@@ -4,26 +4,24 @@ import {
   TAX_ID_LENGTH,
   MIN_PHONE_NUMBER_LENGTH,
 } from '@vg/shared-constants';
-import { IsOptional, IsString, MaxLength, MinLength } from 'class-validator';
+import { IsNotEmpty, IsOptional, MaxLength, MinLength } from 'class-validator';
 
 export class UpdateUserDto {
-  @IsString()
+  @IsOptional()
   @MinLength(MIN_USERNAME_LENGTH)
   @MaxLength(MAX_USERNAME_LENGTH)
-  name?: string | null;
+  name?: string;
 
   @IsOptional()
-  @IsString()
-  address?: string | null;
+  @IsNotEmpty()
+  address?: string;
 
   @IsOptional()
-  @IsString()
   @MinLength(MIN_PHONE_NUMBER_LENGTH)
-  phone?: string | null;
+  phone?: string;
 
   @IsOptional()
-  @IsString()
   @MinLength(TAX_ID_LENGTH)
   @MaxLength(TAX_ID_LENGTH)
-  taxId?: string | null;
+  taxId?: string;
 }
