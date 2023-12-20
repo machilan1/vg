@@ -10,7 +10,6 @@ import {
 import { Express } from 'express';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
-
 import { join } from 'path';
 import { UploadResponse } from './responses/upload.response';
 import {
@@ -20,8 +19,6 @@ import {
   ApiTags,
   ApiBearerAuth,
 } from '@nestjs/swagger';
-import { Type } from 'class-transformer';
-import { FileUploadDto } from './dtos/file-upload.dto';
 import { JwtGuard } from '@vg/api-guards';
 
 @ApiTags('files')

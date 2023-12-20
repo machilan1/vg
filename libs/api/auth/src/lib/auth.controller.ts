@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Query, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
 import {
   ApiBearerAuth,
   ApiOkResponse,
@@ -12,11 +12,15 @@ import { RegisterDto } from './dtos/register.dto';
 import { FindMeResponse } from './responses/find-me.response';
 import { FindMeQueryParamDto } from './dtos/find-me-qeury.dto';
 import { JwtGuard } from '@vg/api-guards';
+import { UsersService } from '@vg/api-users';
 
 @ApiTags('auth')
 @Controller('auth')
 export class AuthController {
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private usersService: UsersService,
+  ) {}
 
   @Post('register')
   @ApiOperation({ operationId: 'register' })
@@ -37,7 +41,8 @@ export class AuthController {
   @UseGuards(JwtGuard)
   @ApiOperation({ operationId: 'findMe' })
   @ApiOkResponse({ type: FindMeResponse })
-  findMe(@Query() params: FindMeQueryParamDto): Promise<FindMeResponse> {
-    return this.authService.findMe(params);
+  findMe(@Req() req): Promise<FindMeResponse> {
+    const { userId } = req['user'];
+    return this.usersService.findOne(userId);
   }
 }
