@@ -597,6 +597,117 @@
           }
         ]
       }
+    },
+    "/auth/register": {
+      "post": {
+        "operationId": "register",
+        "summary": "",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegisterDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthResponse"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "auth"
+        ]
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "operationId": "login",
+        "summary": "",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthResponse"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "auth"
+        ]
+      }
+    },
+    "/auth/me": {
+      "get": {
+        "operationId": "findMe",
+        "summary": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FindMeResponse"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "auth"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
     }
   },
   "info": {
@@ -895,6 +1006,111 @@
         },
         "required": [
           "path"
+        ]
+      },
+      "RegisterDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string",
+            "minLength": 6,
+            "maxLength": 50
+          },
+          "address": {
+            "type": "string"
+          },
+          "phone": {
+            "type": "string",
+            "minLength": 6
+          },
+          "taxId": {
+            "type": "string",
+            "minLength": 8,
+            "maxLength": 8
+          }
+        },
+        "required": [
+          "name",
+          "email",
+          "password",
+          "address",
+          "phone",
+          "taxId"
+        ]
+      },
+      "AuthResponse": {
+        "type": "object",
+        "properties": {
+          "jwt": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "jwt"
+        ]
+      },
+      "LoginDto": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string",
+            "minLength": 6,
+            "maxLength": 50
+          }
+        },
+        "required": [
+          "email",
+          "password"
+        ]
+      },
+      "FindMeResponse": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "number"
+          },
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "address": {
+            "type": "string"
+          },
+          "phone": {
+            "type": "string"
+          },
+          "taxId": {
+            "type": "string"
+          },
+          "isAdmin": {
+            "type": "boolean"
+          },
+          "createdAt": {
+            "format": "date-time",
+            "type": "string"
+          }
+        },
+        "required": [
+          "userId",
+          "name",
+          "email",
+          "address",
+          "phone",
+          "taxId",
+          "isAdmin",
+          "createdAt"
         ]
       }
     }

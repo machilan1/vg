@@ -1,7 +1,8 @@
-import { Module } from '@nestjs/common';
+import { Global, Module } from '@nestjs/common';
 import { JwtGuard } from './jwt.guard';
 import { OwnerGuard } from './owner.guard';
 
+@Global()
 @Module({
   controllers: [],
   providers: [JwtGuard, OwnerGuard],
