@@ -41,8 +41,6 @@ export class FileController {
       storage: diskStorage({
         destination: join(__dirname, 'uploads'),
         filename: (req, file, cb) => {
-          console.log(file.originalname);
-          console.log(__dirname);
           cb(null, file.originalname);
         },
       }),
@@ -60,7 +58,6 @@ export class FileController {
     if (file instanceof Error) {
       throw new BadRequestException();
     } else {
-      console.log(file.path);
       return { path: file.path };
     }
   }

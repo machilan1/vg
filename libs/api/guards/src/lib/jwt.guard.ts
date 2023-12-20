@@ -12,6 +12,7 @@ export class JwtGuard implements CanActivate {
   constructor(private jwtService: JwtService) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
+    console.log(context);
     const request = context.switchToHttp().getRequest();
     const token = this.extractTokenFromHeader(request);
     if (!token) {
@@ -22,6 +23,8 @@ export class JwtGuard implements CanActivate {
         secret: process.env['JWT_SECRET'],
       });
       request['user'] = payload;
+
+      console.log(request['user']);
     } catch {
       throw new UnauthorizedException();
     }

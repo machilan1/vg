@@ -81,11 +81,10 @@ export class ProductsService {
   }
 
   async update(id: number, body: UpdateProductDto) {
-    const abv = await this.conn
-      .update(product)
-      .set(body)
-      .where(eq(product.productId, id))
-      .returning();
+    console.log(id);
+    console.log(body);
+
+    await this.conn.update(product).set(body).where(eq(product.productId, id));
 
     const res = await this.conn.query.product.findFirst({
       columns: { categoryId: false, userId: false },
@@ -98,9 +97,6 @@ export class ProductsService {
       },
       where: eq(product.productId, id),
     });
-
-    console.log(id);
-    console.log(body);
 
     if (!res) {
       throw new NotFoundException();

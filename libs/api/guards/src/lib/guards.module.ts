@@ -5,7 +5,7 @@ import { OwnerGuard } from './owner.guard';
 
 @Module({
   controllers: [],
-  providers: [JwtGuard, JwtService],
+  providers: [JwtGuard, OwnerGuard, JwtService],
   imports: [JwtModule],
   exports: [JwtGuard, OwnerGuard],
 })
