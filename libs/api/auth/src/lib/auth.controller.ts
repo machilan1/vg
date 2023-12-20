@@ -1,11 +1,17 @@
-import { Body, Controller, Get, Post, Query } from '@nestjs/common';
-import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { Body, Controller, Get, Post, Query, UseGuards } from '@nestjs/common';
+import {
+  ApiBearerAuth,
+  ApiOkResponse,
+  ApiOperation,
+  ApiTags,
+} from '@nestjs/swagger';
 import { AuthService } from './auth.service';
 import { AuthResponse } from './responses/auth.response';
 import { LoginDto } from './dtos/login.dto';
 import { RegisterDto } from './dtos/register.dto';
 import { FindMeResponse } from './responses/find-me.response';
 import { FindMeQueryParamDto } from './dtos/find-me-qeury.dto';
+import { JwtGuard } from '@vg/api-guards';
 
 @ApiTags('auth')
 @Controller('auth')
@@ -27,6 +33,8 @@ export class AuthController {
   }
 
   @Get('me')
+  @ApiBearerAuth()
+  @UseGuards(JwtGuard)
   @ApiOperation({ operationId: 'findMe' })
   @ApiOkResponse({ type: FindMeResponse })
   findMe(@Query() params: FindMeQueryParamDto): Promise<FindMeResponse> {

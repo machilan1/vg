@@ -5,11 +5,12 @@ import { AuthController } from './auth.controller';
 import { UsersModule, UsersService } from '@vg/api-users';
 import { DatabaseModule } from '@vg/api-database';
 import { AuthService } from './auth.service';
+import { GuardsModule } from '@vg/api-guards';
 
 @Module({
   controllers: [AuthController],
   providers: [JwtService, ConfigService, UsersService, AuthService],
-  imports: [DatabaseModule],
+  imports: [DatabaseModule, GuardsModule],
   exports: [],
 })
 export class AuthModule {}

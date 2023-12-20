@@ -3,6 +3,7 @@ import {
   ApiTags,
   ApiOperation,
   ApiBadRequestResponse,
+  ApiBearerAuth,
 } from '@nestjs/swagger';
 import { RecordsService } from './api-records.service';
 import {
@@ -15,11 +16,13 @@ import {
   ParseIntPipe,
   Patch,
   Post,
+  UseGuards,
 } from '@nestjs/common';
 import { Record } from './entities/record.entity';
 import { CreateRecordDto } from './dtos/create-record.dto';
 import { HttpCode } from '@nestjs/common';
 import { UpdateRecordDto } from './dtos/update-record.dto';
+import { JwtGuard } from '@vg/api-guards';
 
 @ApiTags('records')
 @Controller('records')
@@ -53,6 +56,8 @@ export class ApiRecordsController {
   }
 
   @Post()
+  @UseGuards(JwtGuard)
+  @ApiBearerAuth()
   @ApiOperation({ operationId: 'createRecord' })
   @ApiBadRequestResponse({
     description: 'Bad request',
@@ -63,6 +68,8 @@ export class ApiRecordsController {
   }
 
   @Patch(':recordId')
+  @ApiBearerAuth()
+  @UseGuards(JwtGuard)
   @ApiOperation({ operationId: 'updateRecord' })
   async update(
     @Param('recordId') recordId: number,
@@ -72,7 +79,11 @@ export class ApiRecordsController {
     return new Record(res);
   }
 
+  // Admin allowed
+
   @Delete(':recordId')
+  @ApiBearerAuth()
+  @UseGuards(JwtGuard)
   @ApiOperation({ operationId: 'deleteRecord' })
   @HttpCode(204)
   delete(@Param('recordId') id: number): Promise<void> {

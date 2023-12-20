@@ -6,6 +6,8 @@ import { CreateProductDto } from './dtos/create-product.dto';
 import { Product } from './entities/product.entity';
 import { UpdateProductDto } from './dtos/update-product.dto';
 import { generateSN } from '../../../records/src/lib/util/generate-sn';
+import { FilterProductParams } from './dtos/filter-product-param.dto';
+import { query } from '@angular/animations';
 
 @Injectable()
 export class ProductsService {
@@ -48,18 +50,37 @@ export class ProductsService {
     return res;
   }
 
-  async find() {
-    const res = await this.conn.query.product.findMany({
-      columns: { categoryId: false, userId: false },
-      with: {
-        records: {
-          orderBy: (records, { desc }) => [desc(records.createdAt)],
+  async findMany(params: FilterProductParams) {
+    const { categoryId } = params;
+
+    let query;
+
+    if (categoryId) {
+      query = await this.conn.query.product.findMany({
+        columns: { categoryId: false, userId: false },
+        with: {
+          records: {
+            orderBy: (records, { desc }) => [desc(records.createdAt)],
+          },
+          category: true,
+          seller: { columns: { password: false } },
         },
-        category: true,
-        seller: { columns: { password: false } },
-      },
-    });
-    return res;
+        where: eq(product.categoryId, categoryId),
+      });
+    } else {
+      query = await this.conn.query.product.findMany({
+        columns: { categoryId: false, userId: false },
+        with: {
+          records: {
+            orderBy: (records, { desc }) => [desc(records.createdAt)],
+          },
+          category: true,
+          seller: { columns: { password: false } },
+        },
+      });
+    }
+
+    return query;
   }
 
   async findOne(id: number) {
@@ -81,11 +102,10 @@ export class ProductsService {
   }
 
   async update(id: number, body: UpdateProductDto) {
-    const abv = await this.conn
-      .update(product)
-      .set(body)
-      .where(eq(product.productId, id))
-      .returning();
+    console.log(id);
+    console.log(body);
+
+    await this.conn.update(product).set(body).where(eq(product.productId, id));
 
     const res = await this.conn.query.product.findFirst({
       columns: { categoryId: false, userId: false },
@@ -98,9 +118,6 @@ export class ProductsService {
       },
       where: eq(product.productId, id),
     });
-
-    console.log(id);
-    console.log(body);
 
     if (!res) {
       throw new NotFoundException();

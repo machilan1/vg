@@ -5,22 +5,31 @@ import {
   UploadedFile,
   BadRequestException,
   ParseFilePipeBuilder,
+  UseGuards,
 } from '@nestjs/common';
 import { Express } from 'express';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { Multer, diskStorage } from 'multer';
-import { FileSizeValidationPipe } from './pipes/file-validation.pipe';
+import { diskStorage } from 'multer';
 
 import { join } from 'path';
 import { UploadResponse } from './responses/upload.response';
-import { ApiBody, ApiConsumes, ApiOperation, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBody,
+  ApiConsumes,
+  ApiOperation,
+  ApiTags,
+  ApiBearerAuth,
+} from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import { FileUploadDto } from './dtos/file-upload.dto';
+import { JwtGuard } from '@vg/api-guards';
 
 @ApiTags('files')
+@UseGuards(JwtGuard)
 @Controller('files')
 export class FileController {
   @Post('upload')
+  @ApiBearerAuth()
   @ApiOperation({ operationId: 'uploadFile' })
   @ApiBody({
     schema: {
@@ -39,8 +48,6 @@ export class FileController {
       storage: diskStorage({
         destination: join(__dirname, 'uploads'),
         filename: (req, file, cb) => {
-          console.log(file.originalname);
-          console.log(__dirname);
           cb(null, file.originalname);
         },
       }),
@@ -58,7 +65,6 @@ export class FileController {
     if (file instanceof Error) {
       throw new BadRequestException();
     } else {
-      console.log(file.path);
       return { path: file.path };
     }
   }

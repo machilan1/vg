@@ -11,6 +11,7 @@ import { StrictHttpResponse } from '../strict-http-response';
 
 import { uploadFile } from '../fn/files/upload-file';
 import { UploadFile$Params } from '../fn/files/upload-file';
+import { UploadResponse } from '../models/upload-response';
 
 @Injectable({ providedIn: 'root' })
 export class FilesService extends BaseService {
@@ -27,8 +28,7 @@ export class FilesService extends BaseService {
    *
    * This method sends `multipart/form-data` and handles request body of type `multipart/form-data`.
    */
-  uploadFile$Response(params: UploadFile$Params, context?: HttpContext): Observable<StrictHttpResponse<{
-}>> {
+  uploadFile$Response(params: UploadFile$Params, context?: HttpContext): Observable<StrictHttpResponse<UploadResponse>> {
     return uploadFile(this.http, this.rootUrl, params, context);
   }
 
@@ -38,12 +38,9 @@ export class FilesService extends BaseService {
    *
    * This method sends `multipart/form-data` and handles request body of type `multipart/form-data`.
    */
-  uploadFile(params: UploadFile$Params, context?: HttpContext): Observable<{
-}> {
+  uploadFile(params: UploadFile$Params, context?: HttpContext): Observable<UploadResponse> {
     return this.uploadFile$Response(params, context).pipe(
-      map((r: StrictHttpResponse<{
-}>): {
-} => r.body)
+      map((r: StrictHttpResponse<UploadResponse>): UploadResponse => r.body)
     );
   }
 

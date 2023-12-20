@@ -17,6 +17,7 @@ export { RegisterDto } from './models/register-dto';
 export { UpdateProductDto } from './models/update-product-dto';
 export { UpdateRecordDto } from './models/update-record-dto';
 export { UpdateUserDto } from './models/update-user-dto';
+export { UploadResponse } from './models/upload-response';
 export { User } from './models/user';
 export { CategoriesService } from './services/categories.service';
 export { AuthService } from './services/auth.service';

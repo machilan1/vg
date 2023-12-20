@@ -8,6 +8,8 @@ import {
   ParseIntPipe,
   Patch,
   Post,
+  Query,
+  UseGuards,
 } from '@nestjs/common';
 import { ProductsService } from './products.service';
 import {
@@ -15,12 +17,15 @@ import {
   ApiTags,
   ApiOperation,
   ApiBadRequestResponse,
+  ApiBearerAuth,
 } from '@nestjs/swagger';
 import { HttpCode } from '@nestjs/common';
 
 import { Product } from './entities/product.entity';
 import { CreateProductDto } from './dtos/create-product.dto';
 import { UpdateProductDto } from './dtos/update-product.dto';
+import { JwtGuard } from '@vg/api-guards';
+import { FilterProductParams } from './dtos/filter-product-param.dto';
 
 @ApiTags('products')
 @Controller('products')
@@ -32,8 +37,8 @@ export class ProductsController {
   @ApiNotFoundResponse({
     description: 'No products found',
   })
-  async getData(): Promise<Product[]> {
-    const findRes = await this.productsService.find();
+  async getMany(@Query() params: FilterProductParams): Promise<Product[]> {
+    const findRes = await this.productsService.findMany(params);
     const res = findRes.map((entry) => new Product(entry));
     return res;
   }
@@ -50,8 +55,11 @@ export class ProductsController {
     }
     return new Product(res!);
   }
+  //
 
   @Post()
+  @ApiBearerAuth()
+  @UseGuards(JwtGuard)
   @ApiOperation({ operationId: 'createProduct' })
   @ApiBadRequestResponse({
     description: 'Bad request',
@@ -62,17 +70,22 @@ export class ProductsController {
   }
 
   @Patch(':productId')
+  @ApiBearerAuth()
+  @UseGuards(JwtGuard)
   @ApiOperation({ operationId: 'updateProduct' })
   async update(
     @Param('productId', ParseIntPipe) productId: number,
     @Body() updateProductDto: UpdateProductDto,
   ): Promise<Product> {
     const res = await this.productsService.update(productId, updateProductDto);
-    console.log(res);
     return res;
   }
 
+  // Admin only
+
   @Delete(':productId')
+  @ApiBearerAuth()
+  @UseGuards(JwtGuard)
   @ApiOperation({ operationId: 'deleteProduct' })
   @HttpCode(204)
   async delete(@Param('productId', ParseIntPipe) id: number) {

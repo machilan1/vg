@@ -56,6 +56,11 @@
         },
         "tags": [
           "categories"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
         ]
       }
     },
@@ -165,6 +170,11 @@
         },
         "tags": [
           "auth"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
         ]
       }
     },
@@ -269,6 +279,11 @@
         },
         "tags": [
           "users"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
         ]
       },
       "delete": {
@@ -294,6 +309,11 @@
         },
         "tags": [
           "users"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
         ]
       }
     },
@@ -301,7 +321,17 @@
       "get": {
         "operationId": "getProducts",
         "summary": "",
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "categoryId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "nullable": true,
+              "type": "number"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "",
@@ -355,6 +385,11 @@
         },
         "tags": [
           "products"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
         ]
       }
     },
@@ -428,6 +463,11 @@
         },
         "tags": [
           "products"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
         ]
       },
       "delete": {
@@ -450,6 +490,11 @@
         },
         "tags": [
           "products"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
         ]
       }
     },
@@ -511,6 +556,11 @@
         },
         "tags": [
           "records"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
         ]
       }
     },
@@ -584,6 +634,11 @@
         },
         "tags": [
           "records"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
         ]
       },
       "delete": {
@@ -606,6 +661,11 @@
         },
         "tags": [
           "records"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
         ]
       }
     },
@@ -644,6 +704,11 @@
         },
         "tags": [
           "files"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
         ]
       }
     }
@@ -657,6 +722,13 @@
   "tags": [],
   "servers": [],
   "components": {
+    "securitySchemes": {
+      "bearer": {
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "type": "http"
+      }
+    },
     "schemas": {
       "Category": {
         "type": "object",
