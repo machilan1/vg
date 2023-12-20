@@ -62,7 +62,7 @@ export class FileController {
     if (file instanceof Error) {
       throw new BadRequestException();
     } else {
-      return { path: file.path };
+      return new UploadResponse(file);
     }
   }
 }

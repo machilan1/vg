@@ -1,6 +1,7 @@
-import { Module } from '@nestjs/common';
+import { Global, Module } from '@nestjs/common';
 import { FileController } from './files.controller';
 
+@Global()
 @Module({
   controllers: [FileController],
   providers: [],

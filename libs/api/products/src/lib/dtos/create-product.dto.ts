@@ -7,9 +7,7 @@ import { Type } from 'class-transformer';
 import {
   IsArray,
   IsNotEmpty,
-  IsNumber,
   IsPositive,
-  IsString,
   MaxLength,
   MinLength,
   ValidateNested,
