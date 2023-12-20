@@ -29,10 +29,7 @@ export class AuthService {
         throw 'Register Failed';
       }
 
-      const jwt = await this.jwtService.signAsync(
-        { userId: res.userId },
-        { privateKey: this.configService.get('JWT_SECRET') },
-      );
+      const jwt = await this.jwtService.signAsync({ userId: res.userId });
 
       return { jwt };
     } catch (err) {
@@ -58,12 +55,7 @@ export class AuthService {
         throw new Error(LOGIN_FAIL);
       }
 
-      const jwt = await this.jwtService.signAsync(
-        { userId: user.userId },
-        {
-          privateKey: this.configService.get('JWT_SECRET'),
-        },
-      );
+      const jwt = await this.jwtService.signAsync({ userId: user.userId });
       if (!jwt) {
         throw new Error(LOGIN_FAIL);
       }
