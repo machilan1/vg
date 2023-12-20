@@ -1,0 +1,1 @@
+ALTER TABLE "app_user" ALTER COLUMN "is_admin" SET NOT NULL;

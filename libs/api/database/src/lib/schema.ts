@@ -16,7 +16,7 @@ export const user = pgTable('app_user', {
   address: varchar('address', { length: 255 }).notNull(),
   phone: varchar('phone', { length: 64 }).notNull(),
   taxId: varchar('tax_id', { length: 255 }).notNull().unique(),
-  isAdmin: boolean('is_admin').default(false),
+  isAdmin: boolean('is_admin').default(false).notNull(),
   createdAt: timestamp('created_at', { withTimezone: true })
     .defaultNow()
     .notNull(),

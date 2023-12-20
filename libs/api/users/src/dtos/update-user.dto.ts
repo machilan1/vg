@@ -13,7 +13,6 @@ export class UpdateUserDto {
   name?: string;
 
   @IsOptional()
-  @IsNotEmpty()
   address?: string;
 
   @IsOptional()

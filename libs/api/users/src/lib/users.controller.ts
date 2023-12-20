@@ -30,16 +30,18 @@ export class UsersController {
   @ApiOperation({ operationId: 'findUsers' })
   @ApiOkResponse({ type: [User] })
   @ApiNotFoundResponse()
-  find() {
-    return this.usersService.find();
+  async find() {
+    const res = await this.usersService.find();
+    return res.map((entry) => new User(entry));
   }
 
   @Get(':userId')
   @ApiOperation({ operationId: 'findUser' })
   @ApiOkResponse({ type: User })
   @ApiNotFoundResponse()
-  findOne(@Param('userId', ParseIntPipe) userId: number) {
-    return this.usersService.findOne(userId);
+  async findOne(@Param('userId', ParseIntPipe) userId: number) {
+    const res = await this.usersService.findOne(userId);
+    return new User(res);
   }
 
   @Patch(':userId')
@@ -48,11 +50,13 @@ export class UsersController {
   @ApiOperation({ operationId: 'updateUser' })
   @ApiOkResponse({ type: User })
   @ApiBadRequestResponse()
-  update(
+  async update(
     @Param('userId', ParseIntPipe) userId: number,
     @Body() updateUserDto: UpdateUserDto,
   ) {
-    return this.usersService.update(userId, updateUserDto);
+    const res = await this.usersService.update(userId, updateUserDto);
+
+    return new User(res);
   }
 
   // admin allowed
@@ -63,7 +67,7 @@ export class UsersController {
   @ApiOperation({ operationId: 'deleteUser' })
   @ApiOkResponse()
   @ApiBadRequestResponse()
-  delete(@Param('userId', ParseIntPipe) userId: number) {
-    return this.usersService.delete(userId);
+  async delete(@Param('userId', ParseIntPipe) userId: number) {
+    await this.usersService.delete(userId);
   }
 }

@@ -6,7 +6,7 @@ import { DatabaseModule } from '@vg/api-database';
 @Module({
   controllers: [ApiRecordsController],
   providers: [RecordsService],
-  imports: [DatabaseModule],
+  imports: [],
   exports: [],
 })
 export class RecordsModule {}

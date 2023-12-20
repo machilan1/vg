@@ -1,10 +1,8 @@
-import { ApiHideProperty } from '@nestjs/swagger';
-
 export class Record {
   recordId!: number;
 
   productId!: number;
-
+  // Todo make sure every data comes in certain sorting rule
   createdAt!: Date;
 
   unitPrice!: number;

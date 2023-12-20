@@ -6,7 +6,7 @@ import { DatabaseModule } from '@vg/api-database';
 @Module({
   controllers: [UsersController],
   providers: [UsersService],
-  imports: [DatabaseModule],
+  imports: [],
   exports: [UsersService],
 })
 export class UsersModule {}

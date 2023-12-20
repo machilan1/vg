@@ -1,5 +1,4 @@
-import { Record } from '../../../../records/src/lib/entities/record.entity';
-import { SelectProduct } from '@vg/api-database';
+import { Record } from '@vg/api-records';
 import { User } from 'libs/api/users/src/entities/user.entity';
 import { Category } from 'libs/api/categories/src/entities/select-category.entity';
 
@@ -25,8 +24,6 @@ export class Product {
 
     if (this.records.length >= 1) {
       this.latestPrice = this.records[0].unitPrice;
-
-      console.log(this.latestPrice);
     }
   }
 }

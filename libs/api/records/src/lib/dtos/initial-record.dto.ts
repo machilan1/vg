@@ -4,8 +4,6 @@ export class InitialRecordDto {
   @IsNotEmpty()
   unitOfMeasure!: string;
 
-  @IsNotEmpty()
-  @IsNumber()
   @IsPositive()
   unitPrice!: number;
 }
