@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { Database, PG_CONNECTION, category } from '@vg/api-database';
 import { CreateCategoryDto } from '../dtos/create-category.dto';
 import { Category } from '../entities/select-category.entity';
@@ -12,22 +12,30 @@ export class CategoriesService {
     const res = await this.conn
       .insert(category)
       .values(createCategoryDto)
-      .returning();
+      .returning({
+        categoryId: category.categoryId,
+        name: category.name,
+        createdAt: category.createdAt,
+      });
 
     return new Category(res[0]);
   }
 
-  find(): Promise<Category[]> {
-    const res = this.conn.select().from(category);
-    return res;
+  async findMany(): Promise<Category[]> {
+    const res = await this.conn.select().from(category);
+    return res.map((entry) => new Category(entry));
   }
 
   async findOne(categoryId: number) {
-    const res = await this.conn
+    const [res] = await this.conn
       .select()
       .from(category)
       .where(eq(category.categoryId, categoryId));
 
-    return res;
+    if (!res) {
+      throw new NotFoundException();
+    }
+
+    return new Category(res);
   }
 }

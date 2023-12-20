@@ -23,7 +23,7 @@ export class CategoriesController {
   @ApiOperation({ operationId: 'findCategories' })
   @ApiOkResponse({ type: [Category] })
   find() {
-    return this.categoriesService.find();
+    return this.categoriesService.findMany();
   }
 
   @Post()

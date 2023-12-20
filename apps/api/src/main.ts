@@ -21,8 +21,7 @@ async function bootstrap() {
 
   app.useGlobalPipes(new ValidationPipe({ transform: true }));
 
-  // Todo figure out what is this part doing?
-
+  // Todo Figure out what is this line doing?
   app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)));
 
   const configService = app.get(ConfigService);
