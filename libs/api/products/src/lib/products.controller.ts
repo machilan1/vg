@@ -1,28 +1,20 @@
-import { TAX_ID_LENGTH } from './../../../../shared/constants/src/lib/shared-constants';
 import {
   Body,
   Controller,
   Delete,
   Get,
+  NotFoundException,
   Param,
   ParseIntPipe,
   Patch,
   Post,
-  Query,
 } from '@nestjs/common';
 import { ProductsService } from './products.service';
 import {
-  ApiOkResponse,
   ApiNotFoundResponse,
-  ApiCreatedResponse,
-  ApiNoContentResponse,
-  ApiParam,
   ApiTags,
-  ApiQuery,
   ApiOperation,
   ApiBadRequestResponse,
-  ApiHideProperty,
-  ApiResponseProperty,
 } from '@nestjs/swagger';
 import { HttpCode } from '@nestjs/common';
 
@@ -40,9 +32,10 @@ export class ProductsController {
   @ApiNotFoundResponse({
     description: 'No products found',
   })
-  getData(): Promise<Product[]> {
-    // return this.productsService.find();
-    throw new Error('no implemented');
+  async getData(): Promise<Product[]> {
+    const findRes = await this.productsService.find();
+    const res = findRes.map((entry) => new Product(entry));
+    return res;
   }
 
   @Get(':productId')
@@ -50,9 +43,12 @@ export class ProductsController {
   @ApiNotFoundResponse({
     description: 'Product not found',
   })
-  getProduct(@Param('productId', ParseIntPipe) id: number): Promise<Product> {
-    throw new Error('no implemented');
-    // return this.productsService.findOne(id);
+  async getProduct(@Param('productId', ParseIntPipe) id: number) {
+    const res = await this.productsService.findOne(id);
+    if (!res) {
+      throw new NotFoundException();
+    }
+    return new Product(res!);
   }
 
   @Post()
@@ -60,26 +56,26 @@ export class ProductsController {
   @ApiBadRequestResponse({
     description: 'Bad request',
   })
-  create(@Body() body: CreateProductDto): Promise<Product> {
-    throw new Error('no implemented');
-    // return this.productsService.create();
+  async create(@Body() body: CreateProductDto): Promise<Product> {
+    const res = await this.productsService.create(body);
+    return new Product(res);
   }
 
   @Patch(':productId')
   @ApiOperation({ operationId: 'updateProduct' })
-  update(
-    @Param('productId') productId: number,
-    @Body() body: UpdateProductDto,
+  async update(
+    @Param('productId', ParseIntPipe) productId: number,
+    @Body() updateProductDto: UpdateProductDto,
   ): Promise<Product> {
-    throw new Error('no implemented');
-    // return this.productsService.update(id, body);
+    const res = await this.productsService.update(productId, updateProductDto);
+    console.log(res);
+    return res;
   }
 
   @Delete(':productId')
   @ApiOperation({ operationId: 'deleteProduct' })
   @HttpCode(204)
-  delete(@Param('productId') id: number): Promise<void> {
-    throw new Error('no implemented');
-    // return this.productsService.delete(id);
+  async delete(@Param('productId', ParseIntPipe) id: number) {
+    const res = await this.productsService.delete(id);
   }
 }

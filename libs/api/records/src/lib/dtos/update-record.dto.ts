@@ -1,6 +1,10 @@
+import { IsNumber, IsPositive, IsString } from 'class-validator';
+
 export class UpdateRecordDto {
-  date?: Date;
-  trackNumber?: number;
+  @IsNumber()
+  @IsPositive()
   unitPrice?: number;
+
+  @IsString()
   unitOfMeasure?: string;
 }

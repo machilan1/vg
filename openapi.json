@@ -24,6 +24,39 @@
         "tags": [
           "categories"
         ]
+      },
+      "post": {
+        "operationId": "createCategory",
+        "summary": "",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateCategoryDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Category"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "categories"
+        ]
       }
     },
     "/auth/register": {
@@ -88,7 +121,14 @@
             }
           },
           "201": {
-            "description": ""
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
           }
         },
         "tags": [
@@ -100,7 +140,17 @@
       "get": {
         "operationId": "findMe",
         "summary": "",
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "userId",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "minimum": 1,
+              "type": "number"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "",
@@ -590,26 +640,45 @@
           "createdAt"
         ]
       },
+      "CreateCategoryDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 10
+          }
+        },
+        "required": [
+          "name"
+        ]
+      },
       "RegisterDto": {
         "type": "object",
         "properties": {
           "name": {
-            "type": "string"
+            "type": "string",
+            "minLength": 1
           },
           "email": {
             "type": "string"
           },
           "password": {
-            "type": "string"
+            "type": "string",
+            "minLength": 6,
+            "maxLength": 50
           },
           "address": {
             "type": "string"
           },
           "phone": {
-            "type": "string"
+            "type": "string",
+            "minLength": 6
           },
           "taxId": {
-            "type": "string"
+            "type": "string",
+            "minLength": 8,
+            "maxLength": 8
           }
         },
         "required": [
@@ -639,7 +708,9 @@
             "type": "string"
           },
           "password": {
-            "type": "string"
+            "type": "string",
+            "minLength": 6,
+            "maxLength": 50
           }
         },
         "required": [
@@ -734,7 +805,9 @@
         "properties": {
           "name": {
             "type": "string",
-            "nullable": true
+            "nullable": true,
+            "minLength": 1,
+            "maxLength": 30
           },
           "address": {
             "type": "string",
@@ -742,19 +815,16 @@
           },
           "phone": {
             "type": "string",
-            "nullable": true
+            "nullable": true,
+            "minLength": 6
           },
           "taxId": {
             "type": "string",
-            "nullable": true
+            "nullable": true,
+            "minLength": 8,
+            "maxLength": 8
           }
-        },
-        "required": [
-          "name",
-          "address",
-          "phone",
-          "taxId"
-        ]
+        }
       },
       "Record": {
         "type": "object",
@@ -803,17 +873,17 @@
           "image": {
             "type": "string"
           },
-          "seller": {
-            "$ref": "#/components/schemas/User"
-          },
-          "price": {
-            "type": "number"
-          },
           "records": {
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/Record"
             }
+          },
+          "latestPrice": {
+            "type": "number"
+          },
+          "seller": {
+            "$ref": "#/components/schemas/User"
           },
           "createdAt": {
             "format": "date-time",
@@ -825,90 +895,105 @@
           "category",
           "name",
           "image",
-          "seller",
-          "price",
           "records",
+          "seller",
           "createdAt"
+        ]
+      },
+      "InitialRecordDto": {
+        "type": "object",
+        "properties": {
+          "unitOfMeasure": {
+            "type": "string"
+          },
+          "unitPrice": {
+            "type": "number",
+            "minimum": 1
+          }
+        },
+        "required": [
+          "unitOfMeasure",
+          "unitPrice"
         ]
       },
       "CreateProductDto": {
         "type": "object",
         "properties": {
-          "categoryId": {
-            "type": "number"
+          "userId": {
+            "type": "number",
+            "minimum": 1
           },
           "name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "image": {
             "type": "string"
           },
+          "categoryId": {
+            "type": "number",
+            "minimum": 1
+          },
           "records": {
+            "default": [],
             "type": "array",
             "items": {
-              "type": "string"
+              "$ref": "#/components/schemas/InitialRecordDto"
             }
           }
         },
         "required": [
-          "categoryId",
+          "userId",
           "name",
-          "records"
+          "image",
+          "categoryId"
         ]
       },
       "UpdateProductDto": {
         "type": "object",
         "properties": {
-          "name": {
-            "type": "string"
-          },
           "categoryId": {
-            "type": "number"
+            "type": "number",
+            "minimum": 1
           },
-          "price": {
-            "type": "number"
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
           },
-          "records": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
+          "image": {
+            "type": "string"
           }
         }
       },
       "CreateRecordDto": {
         "type": "object",
         "properties": {
-          "date": {
-            "format": "date-time",
-            "type": "string"
-          },
-          "trackNumber": {
-            "type": "number"
-          },
-          "unitPrice": {
-            "type": "number"
+          "productId": {
+            "type": "number",
+            "minimum": 1
           },
           "unitOfMeasure": {
             "type": "string"
+          },
+          "unitPrice": {
+            "type": "number",
+            "minimum": 1
           }
         },
         "required": [
-          "date",
-          "trackNumber",
-          "unitPrice",
-          "unitOfMeasure"
+          "productId",
+          "unitOfMeasure",
+          "unitPrice"
         ]
       },
       "UpdateRecordDto": {
         "type": "object",
         "properties": {
-          "date": {
-            "format": "date-time",
-            "type": "string"
-          },
-          "trackNumber": {
-            "type": "number"
-          },
           "unitPrice": {
-            "type": "number"
+            "type": "number",
+            "minimum": 1
           },
           "unitOfMeasure": {
             "type": "string"

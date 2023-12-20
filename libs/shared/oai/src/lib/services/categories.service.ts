@@ -28,7 +28,10 @@ export class CategoriesService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  findCategories$Response(params?: FindCategories$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<Category>>> {
+  findCategories$Response(
+    params?: FindCategories$Params,
+    context?: HttpContext,
+  ): Observable<StrictHttpResponse<Array<Category>>> {
     return findCategories(this.http, this.rootUrl, params, context);
   }
 
@@ -38,10 +41,12 @@ export class CategoriesService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  findCategories(params?: FindCategories$Params, context?: HttpContext): Observable<Array<Category>> {
+  findCategories(
+    params?: FindCategories$Params,
+    context?: HttpContext,
+  ): Observable<Array<Category>> {
     return this.findCategories$Response(params, context).pipe(
-      map((r: StrictHttpResponse<Array<Category>>): Array<Category> => r.body)
+      map((r: StrictHttpResponse<Array<Category>>): Array<Category> => r.body),
     );
   }
-
 }

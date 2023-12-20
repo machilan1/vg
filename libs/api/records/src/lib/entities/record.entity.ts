@@ -1,22 +1,19 @@
-import { ApiProperty } from "@nestjs/swagger";
+import { ApiHideProperty } from '@nestjs/swagger';
 
 export class Record {
-   @ApiProperty()
-    recordId!: number;
+  recordId!: number;
 
-    @ApiProperty()
-    productId!: number;
+  productId!: number;
 
-    @ApiProperty()
-    createdAt!: Date;
+  createdAt!: Date;
 
-    @ApiProperty()
-    unitPrice!: number;
+  unitPrice!: number;
 
-    @ApiProperty()
-    unitOfMeasure!: string;
+  unitOfMeasure!: string;
 
-    @ApiProperty()
-    trackNumber!: string;
+  trackNumber!: string;
 
+  constructor(data: Record) {
+    Object.assign(this, data);
+  }
 }

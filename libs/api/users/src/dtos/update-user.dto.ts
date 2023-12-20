@@ -1,27 +1,29 @@
-import { ApiProperty } from '@nestjs/swagger';
 import {
   MIN_USERNAME_LENGTH,
   MAX_USERNAME_LENGTH,
   TAX_ID_LENGTH,
+  MIN_PHONE_NUMBER_LENGTH,
 } from '@vg/shared-constants';
-import { IsString, Length } from 'class-validator';
+import { IsOptional, IsString, MaxLength, MinLength } from 'class-validator';
 
 export class UpdateUserDto {
-  @ApiProperty({ type: String, nullable: true })
   @IsString()
-  @Length(MIN_USERNAME_LENGTH, MAX_USERNAME_LENGTH)
-  name!: string;
+  @MinLength(MIN_USERNAME_LENGTH)
+  @MaxLength(MAX_USERNAME_LENGTH)
+  name?: string | null;
 
-  @ApiProperty({ type: String, nullable: true })
+  @IsOptional()
   @IsString()
-  address!: string;
+  address?: string | null;
 
-  @ApiProperty({ type: String, nullable: true })
+  @IsOptional()
   @IsString()
-  phone!: string;
+  @MinLength(MIN_PHONE_NUMBER_LENGTH)
+  phone?: string | null;
 
-  @ApiProperty({ type: String, nullable: true })
+  @IsOptional()
   @IsString()
-  @Length(TAX_ID_LENGTH, TAX_ID_LENGTH)
-  taxId!: string;
+  @MinLength(TAX_ID_LENGTH)
+  @MaxLength(TAX_ID_LENGTH)
+  taxId?: string | null;
 }
