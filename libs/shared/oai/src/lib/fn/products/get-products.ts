@@ -9,11 +9,13 @@ import { RequestBuilder } from '../../request-builder';
 import { Product } from '../../models/product';
 
 export interface GetProducts$Params {
+  categoryId?: number | null;
 }
 
 export function getProducts(http: HttpClient, rootUrl: string, params?: GetProducts$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<Product>>> {
   const rb = new RequestBuilder(rootUrl, getProducts.PATH, 'get');
   if (params) {
+    rb.query('categoryId', params.categoryId, {});
   }
 
   return http.request(
