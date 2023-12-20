@@ -2,7 +2,6 @@ import { Inject, Injectable } from '@nestjs/common';
 import { PG_CONNECTION, Database, user } from '@vg/api-database';
 import { eq } from 'drizzle-orm';
 import { UpdateUserDto } from '../dtos/update-user.dto';
-import { emit } from 'process';
 
 @Injectable()
 export class UsersService {

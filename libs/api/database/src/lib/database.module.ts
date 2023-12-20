@@ -1,10 +1,11 @@
-import { Module } from '@nestjs/common';
+import { Global, Module } from '@nestjs/common';
 import { PG_CONNECTION } from './token';
 import postgres from 'postgres';
 import * as schema from './schema';
 import { drizzle } from 'drizzle-orm/postgres-js';
 import { ConfigService } from '@nestjs/config';
 
+@Global()
 @Module({
   providers: [
     {

@@ -13,6 +13,8 @@ import { query } from '@angular/animations';
 export class ProductsService {
   constructor(@Inject(PG_CONNECTION) private conn: Database) {}
 
+  // find a way to refactor repetetive codes
+
   async create(createProductDto: CreateProductDto): Promise<Product> {
     const { records, ...createProductPayload } = createProductDto;
 

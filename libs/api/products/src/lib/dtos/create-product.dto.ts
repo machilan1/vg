@@ -16,23 +16,16 @@ import {
 } from 'class-validator';
 
 export class CreateProductDto {
-  @IsNotEmpty()
-  @IsNumber()
   @IsPositive()
   userId!: number;
 
-  @IsNotEmpty()
-  @IsString()
   @MinLength(MIN_PRODUCT_NAME_LENGTH)
   @MaxLength(MAX_PRODUCT_NAME_LENGTH)
   name!: string;
 
   @IsNotEmpty()
-  @IsString()
   image!: string;
 
-  @IsNotEmpty()
-  @IsNumber()
   @IsPositive()
   categoryId!: number;
 

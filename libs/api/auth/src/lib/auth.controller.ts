@@ -10,9 +10,9 @@ import { AuthResponse } from './responses/auth.response';
 import { LoginDto } from './dtos/login.dto';
 import { RegisterDto } from './dtos/register.dto';
 import { FindMeResponse } from './responses/find-me.response';
-import { FindMeQueryParamDto } from './dtos/find-me-qeury.dto';
 import { JwtGuard } from '@vg/api-guards';
 import { UsersService } from '@vg/api-users';
+import { User } from 'libs/api/users/src/entities/user.entity';
 
 @ApiTags('auth')
 @Controller('auth')
@@ -41,8 +41,9 @@ export class AuthController {
   @UseGuards(JwtGuard)
   @ApiOperation({ operationId: 'findMe' })
   @ApiOkResponse({ type: FindMeResponse })
-  findMe(@Req() req): Promise<FindMeResponse> {
+  async findMe(@Req() req): Promise<User> {
     const { userId } = req['user'];
-    return this.usersService.findOne(userId);
+    const res = await this.usersService.findOne(userId);
+    return new User(res);
   }
 }

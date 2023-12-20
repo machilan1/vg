@@ -78,7 +78,7 @@ export class ProductsController {
     @Body() updateProductDto: UpdateProductDto,
   ): Promise<Product> {
     const res = await this.productsService.update(productId, updateProductDto);
-    return res;
+    return new Product(res);
   }
 
   // Admin only
@@ -89,6 +89,6 @@ export class ProductsController {
   @ApiOperation({ operationId: 'deleteProduct' })
   @HttpCode(204)
   async delete(@Param('productId', ParseIntPipe) id: number) {
-    const res = await this.productsService.delete(id);
+    await this.productsService.delete(id);
   }
 }
