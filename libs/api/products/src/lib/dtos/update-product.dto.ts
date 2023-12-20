@@ -1,4 +1,3 @@
-import { CreateRecordDto } from '@vg/api-records';
 import {
   MAX_PRODUCT_NAME_LENGTH,
   MIN_PRODUCT_NAME_LENGTH,

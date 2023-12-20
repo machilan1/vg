@@ -8,6 +8,7 @@ import {
   ParseIntPipe,
   Patch,
   Post,
+  Query,
   UseGuards,
 } from '@nestjs/common';
 import { ProductsService } from './products.service';
@@ -23,6 +24,7 @@ import { Product } from './entities/product.entity';
 import { CreateProductDto } from './dtos/create-product.dto';
 import { UpdateProductDto } from './dtos/update-product.dto';
 import { JwtGuard } from '@vg/api-guards';
+import { FilterProductParams } from './dtos/filter-product-param.dto';
 
 @ApiTags('products')
 @Controller('products')
@@ -34,8 +36,8 @@ export class ProductsController {
   @ApiNotFoundResponse({
     description: 'No products found',
   })
-  async getData(): Promise<Product[]> {
-    const findRes = await this.productsService.find();
+  async getMany(@Query() params: FilterProductParams): Promise<Product[]> {
+    const findRes = await this.productsService.findMany(params);
     const res = findRes.map((entry) => new Product(entry));
     return res;
   }

@@ -301,7 +301,17 @@
       "get": {
         "operationId": "getProducts",
         "summary": "",
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "categoryId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "nullable": true,
+              "type": "number"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "",
