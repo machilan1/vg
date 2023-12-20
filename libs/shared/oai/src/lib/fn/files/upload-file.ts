@@ -6,14 +6,18 @@ import { filter, map } from 'rxjs/operators';
 import { StrictHttpResponse } from '../../strict-http-response';
 import { RequestBuilder } from '../../request-builder';
 
-import { User } from '../../models/user';
 
-export interface FindUsers$Params {
+export interface UploadFile$Params {
+      body: {
+'file'?: Blob;
+}
 }
 
-export function findUsers(http: HttpClient, rootUrl: string, params?: FindUsers$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<User>>> {
-  const rb = new RequestBuilder(rootUrl, findUsers.PATH, 'get');
+export function uploadFile(http: HttpClient, rootUrl: string, params: UploadFile$Params, context?: HttpContext): Observable<StrictHttpResponse<{
+}>> {
+  const rb = new RequestBuilder(rootUrl, uploadFile.PATH, 'post');
   if (params) {
+    rb.body(params.body, 'multipart/form-data');
   }
 
   return http.request(
@@ -21,9 +25,10 @@ export function findUsers(http: HttpClient, rootUrl: string, params?: FindUsers$
   ).pipe(
     filter((r: any): r is HttpResponse<any> => r instanceof HttpResponse),
     map((r: HttpResponse<any>) => {
-      return r as StrictHttpResponse<Array<User>>;
+      return r as StrictHttpResponse<{
+      }>;
     })
   );
 }
 
-findUsers.PATH = '/users';
+uploadFile.PATH = '/files/upload';

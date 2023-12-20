@@ -1,15 +1,18 @@
 import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { ProductStateService } from '@vg/products';
+import { UploadComponent } from '../../../../../shared/components/upload.component';
+import { FilesService } from '@vg/oai';
 
 @Component({
   selector: 'vg-home',
   standalone: true,
-  imports: [RouterLink],
+  imports: [RouterLink, UploadComponent],
   template: `
     <div class="w-full h-full  flex flex-col gap-20">
       <div class="text-center text-7xl pt-32">Looking For ...</div>
       <div class="w-full grid grid-cols-4 grid-rows-2 gap-12">
+        <vg-uploader></vg-uploader>
         @if (categories.isLoading()) {
           <div>loading</div>
         } @else if (categories.isError()) {
@@ -33,6 +36,5 @@ import { ProductStateService } from '@vg/products';
 })
 export class HomeComponent {
   #productStateService = inject(ProductStateService);
-
   categories = this.#productStateService.getCategories();
 }
