@@ -6,6 +6,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { AuthStateService } from './auth-state.service';
 
 @Component({
   selector: 'vg-login',
@@ -44,22 +45,17 @@ import {
   `,
 })
 export class LoginComponent {
-  #fb = inject(FormBuilder);
-
-  loginForm2 = this.#fb.group({
-    username: this.#fb.nonNullable.control('', [
-      Validators.required,
-      Validators.email,
-    ]),
-    password: this.#fb.nonNullable.control('', [Validators.required]),
-  });
+  #authStateService = inject(AuthStateService);
 
   loginForm = new FormGroup({
     username: new FormControl('', {
       validators: [Validators.required, Validators.email],
       nonNullable: true,
     }),
-    password: new FormControl('', [Validators.required]),
+    password: new FormControl('', {
+      validators: [Validators.required],
+      nonNullable: true,
+    }),
   });
 
   submit() {
@@ -68,5 +64,10 @@ export class LoginComponent {
       return;
     }
     console.log(this.loginForm.getRawValue());
+
+    this.#authStateService.loginMutation().mutate({
+      email: this.loginForm.getRawValue().username,
+      password: this.loginForm.getRawValue().password,
+    });
   }
 }
