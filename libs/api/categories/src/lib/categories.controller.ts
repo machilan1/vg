@@ -22,8 +22,9 @@ export class CategoriesController {
   @Get()
   @ApiOperation({ operationId: 'findCategories' })
   @ApiOkResponse({ type: [Category] })
-  find() {
-    return this.categoriesService.findMany();
+  async find() {
+    const res = await this.categoriesService.findMany();
+    return res.map((entry) => new Category(entry));
   }
 
   @Post()
@@ -32,7 +33,8 @@ export class CategoriesController {
   @ApiOperation({ operationId: 'createCategory' })
   @ApiCreatedResponse({ type: Category })
   @ApiBadRequestResponse()
-  create(@Body() createCategoryDto: CreateCategoryDto) {
-    return this.categoriesService.create(createCategoryDto);
+  async create(@Body() createCategoryDto: CreateCategoryDto) {
+    const res = await this.categoriesService.create(createCategoryDto);
+    return new Category(res);
   }
 }

@@ -9,7 +9,7 @@ export class CategoriesService {
   constructor(@Inject(PG_CONNECTION) private conn: Database) {}
 
   async create(createCategoryDto: CreateCategoryDto) {
-    const res = await this.conn
+    const [res] = await this.conn
       .insert(category)
       .values(createCategoryDto)
       .returning({
@@ -18,24 +18,28 @@ export class CategoriesService {
         createdAt: category.createdAt,
       });
 
-    return new Category(res[0]);
-  }
-
-  async findMany(): Promise<Category[]> {
-    const res = await this.conn.select().from(category);
-    return res.map((entry) => new Category(entry));
-  }
-
-  async findOne(categoryId: number) {
-    const [res] = await this.conn
-      .select()
-      .from(category)
-      .where(eq(category.categoryId, categoryId));
-
     if (!res) {
       throw new NotFoundException();
     }
 
-    return new Category(res);
+    return res;
   }
+
+  async findMany(): Promise<Category[]> {
+    const res = await this.conn.select().from(category);
+    return res;
+  }
+
+  // async findOne(categoryId: number) {
+  //   const [res] = await this.conn
+  //     .select()
+  //     .from(category)
+  //     .where(eq(category.categoryId, categoryId));
+
+  //   if (!res) {
+  //     throw new NotFoundException();
+  //   }
+
+  //   return new Category(res);
+  // }
 }
