@@ -5,19 +5,21 @@ import {
   UploadedFile,
   BadRequestException,
   ParseFilePipeBuilder,
+  UseGuards,
 } from '@nestjs/common';
 import { Express } from 'express';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { Multer, diskStorage } from 'multer';
-import { FileSizeValidationPipe } from './pipes/file-validation.pipe';
+import { diskStorage } from 'multer';
 
 import { join } from 'path';
 import { UploadResponse } from './responses/upload.response';
 import { ApiBody, ApiConsumes, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import { FileUploadDto } from './dtos/file-upload.dto';
+import { JwtGuard } from '@vg/api-guards';
 
 @ApiTags('files')
+@UseGuards(JwtGuard)
 @Controller('files')
 export class FileController {
   @Post('upload')

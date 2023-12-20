@@ -636,7 +636,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object"
+                  "$ref": "#/components/schemas/UploadResponse"
                 }
               }
             }
@@ -1037,6 +1037,17 @@
             "type": "string"
           }
         }
+      },
+      "UploadResponse": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "path"
+        ]
       }
     }
   }

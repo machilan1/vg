@@ -6,6 +6,7 @@ import {
   Param,
   ParseIntPipe,
   Patch,
+  UseGuards,
 } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
@@ -17,6 +18,7 @@ import {
 import { User } from '../entities/user.entity';
 import { UsersService } from './users.service';
 import { UpdateUserDto } from '../dtos/update-user.dto';
+import { JwtGuard } from '@vg/api-guards';
 
 @ApiTags('users')
 @Controller('users')
@@ -40,17 +42,21 @@ export class UsersController {
   }
 
   @Patch(':userId')
+  @UseGuards(JwtGuard)
   @ApiOperation({ operationId: 'updateUser' })
   @ApiOkResponse({ type: User })
   @ApiBadRequestResponse()
   update(
     @Param('userId', ParseIntPipe) userId: number,
-    @Body() updateUserDto: UpdateUserDto
+    @Body() updateUserDto: UpdateUserDto,
   ) {
     return this.usersService.update(userId, updateUserDto);
   }
 
+  // admin allowed
+
   @Delete(':userId')
+  @UseGuards(JwtGuard)
   @ApiOperation({ operationId: 'deleteUser' })
   @ApiOkResponse()
   @ApiBadRequestResponse()

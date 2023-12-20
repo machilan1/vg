@@ -8,6 +8,7 @@ import {
   ParseIntPipe,
   Patch,
   Post,
+  UseGuards,
 } from '@nestjs/common';
 import { ProductsService } from './products.service';
 import {
@@ -21,6 +22,7 @@ import { HttpCode } from '@nestjs/common';
 import { Product } from './entities/product.entity';
 import { CreateProductDto } from './dtos/create-product.dto';
 import { UpdateProductDto } from './dtos/update-product.dto';
+import { JwtGuard } from '@vg/api-guards';
 
 @ApiTags('products')
 @Controller('products')
@@ -50,8 +52,10 @@ export class ProductsController {
     }
     return new Product(res!);
   }
+  //
 
   @Post()
+  @UseGuards(JwtGuard)
   @ApiOperation({ operationId: 'createProduct' })
   @ApiBadRequestResponse({
     description: 'Bad request',
@@ -62,6 +66,7 @@ export class ProductsController {
   }
 
   @Patch(':productId')
+  @UseGuards(JwtGuard)
   @ApiOperation({ operationId: 'updateProduct' })
   async update(
     @Param('productId', ParseIntPipe) productId: number,
@@ -72,7 +77,10 @@ export class ProductsController {
     return res;
   }
 
+  // Admin only
+
   @Delete(':productId')
+  @UseGuards(JwtGuard)
   @ApiOperation({ operationId: 'deleteProduct' })
   @HttpCode(204)
   async delete(@Param('productId', ParseIntPipe) id: number) {
