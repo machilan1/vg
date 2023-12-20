@@ -29,8 +29,6 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 export class UploadComponent implements AfterViewInit {
   private destroyRef = inject(DestroyRef);
 
-  @Output() onUpload = new EventEmitter<File>();
-
   @ViewChild('upload') input!: ElementRef<HTMLInputElement>;
 
   ngAfterViewInit(): void {
@@ -40,6 +38,7 @@ export class UploadComponent implements AfterViewInit {
         map((data) => (data as any).target.files[0]),
       )
       .subscribe((file) => {
+        console.log(file);
         //  Implement file upload here
       });
   }
