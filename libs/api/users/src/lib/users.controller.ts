@@ -10,6 +10,7 @@ import {
 } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
+  ApiBearerAuth,
   ApiNotFoundResponse,
   ApiOkResponse,
   ApiOperation,
@@ -42,6 +43,7 @@ export class UsersController {
   }
 
   @Patch(':userId')
+  @ApiBearerAuth()
   @UseGuards(JwtGuard)
   @ApiOperation({ operationId: 'updateUser' })
   @ApiOkResponse({ type: User })
@@ -56,6 +58,7 @@ export class UsersController {
   // admin allowed
 
   @Delete(':userId')
+  @ApiBearerAuth()
   @UseGuards(JwtGuard)
   @ApiOperation({ operationId: 'deleteUser' })
   @ApiOkResponse()

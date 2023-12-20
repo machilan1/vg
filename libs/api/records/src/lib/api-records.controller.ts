@@ -3,6 +3,7 @@ import {
   ApiTags,
   ApiOperation,
   ApiBadRequestResponse,
+  ApiBearerAuth,
 } from '@nestjs/swagger';
 import { RecordsService } from './api-records.service';
 import {
@@ -56,6 +57,7 @@ export class ApiRecordsController {
 
   @Post()
   @UseGuards(JwtGuard)
+  @ApiBearerAuth()
   @ApiOperation({ operationId: 'createRecord' })
   @ApiBadRequestResponse({
     description: 'Bad request',
@@ -66,6 +68,7 @@ export class ApiRecordsController {
   }
 
   @Patch(':recordId')
+  @ApiBearerAuth()
   @UseGuards(JwtGuard)
   @ApiOperation({ operationId: 'updateRecord' })
   async update(
@@ -79,6 +82,7 @@ export class ApiRecordsController {
   // Admin allowed
 
   @Delete(':recordId')
+  @ApiBearerAuth()
   @UseGuards(JwtGuard)
   @ApiOperation({ operationId: 'deleteRecord' })
   @HttpCode(204)

@@ -1,7 +1,9 @@
 import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
+  ApiBearerAuth,
   ApiCreatedResponse,
+  ApiHeader,
   ApiNotFoundResponse,
   ApiOkResponse,
   ApiOperation,
@@ -25,6 +27,7 @@ export class CategoriesController {
   }
 
   @Post()
+  @ApiBearerAuth()
   @UseGuards(JwtGuard)
   @ApiOperation({ operationId: 'createCategory' })
   @ApiCreatedResponse({ type: Category })

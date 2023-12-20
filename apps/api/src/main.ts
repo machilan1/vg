@@ -28,6 +28,7 @@ async function bootstrap() {
   const configService = app.get(ConfigService);
 
   const config = new DocumentBuilder()
+    .addBearerAuth()
     .setTitle('Veggies Api')
     .setVersion('1.0')
     .build();

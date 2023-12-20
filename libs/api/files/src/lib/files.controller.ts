@@ -13,7 +13,13 @@ import { diskStorage } from 'multer';
 
 import { join } from 'path';
 import { UploadResponse } from './responses/upload.response';
-import { ApiBody, ApiConsumes, ApiOperation, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBody,
+  ApiConsumes,
+  ApiOperation,
+  ApiTags,
+  ApiBearerAuth,
+} from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import { FileUploadDto } from './dtos/file-upload.dto';
 import { JwtGuard } from '@vg/api-guards';
@@ -23,6 +29,7 @@ import { JwtGuard } from '@vg/api-guards';
 @Controller('files')
 export class FileController {
   @Post('upload')
+  @ApiBearerAuth()
   @ApiOperation({ operationId: 'uploadFile' })
   @ApiBody({
     schema: {

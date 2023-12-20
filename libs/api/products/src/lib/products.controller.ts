@@ -17,6 +17,7 @@ import {
   ApiTags,
   ApiOperation,
   ApiBadRequestResponse,
+  ApiBearerAuth,
 } from '@nestjs/swagger';
 import { HttpCode } from '@nestjs/common';
 
@@ -57,6 +58,7 @@ export class ProductsController {
   //
 
   @Post()
+  @ApiBearerAuth()
   @UseGuards(JwtGuard)
   @ApiOperation({ operationId: 'createProduct' })
   @ApiBadRequestResponse({
@@ -68,6 +70,7 @@ export class ProductsController {
   }
 
   @Patch(':productId')
+  @ApiBearerAuth()
   @UseGuards(JwtGuard)
   @ApiOperation({ operationId: 'updateProduct' })
   async update(
@@ -81,6 +84,7 @@ export class ProductsController {
   // Admin only
 
   @Delete(':productId')
+  @ApiBearerAuth()
   @UseGuards(JwtGuard)
   @ApiOperation({ operationId: 'deleteProduct' })
   @HttpCode(204)
