@@ -24,6 +24,7 @@
       "@vg/api-records": ["libs/api/records/src/index.ts"],
       "@vg/api-users": ["libs/api/users/src/index.ts"],
       "@vg/auth": ["libs/web/auth/src/index.ts"],
+      "@vg/files": ["libs/api/files/src/index.ts"],
       "@vg/home": ["libs/web/home/src/index.ts"],
       "@vg/oai": ["libs/shared/oai/src/index.ts"],
       "@vg/products": ["libs/web/products/src/index.ts"],
