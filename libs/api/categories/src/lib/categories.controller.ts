@@ -12,7 +12,7 @@ import {
 import { CategoriesService } from './categories.service';
 import { Category } from '../entities/select-category.entity';
 import { CreateCategoryDto } from '../dtos/create-category.dto';
-import { JwtGuard } from '@vg/api-guards';
+import { JwtGuard, AdminGuard } from '@vg/api-guards';
 
 @ApiTags('categories')
 @Controller('categories')
@@ -29,7 +29,7 @@ export class CategoriesController {
 
   @Post()
   @ApiBearerAuth()
-  @UseGuards(JwtGuard)
+  @UseGuards(JwtGuard, AdminGuard)
   @ApiOperation({ operationId: 'createCategory' })
   @ApiCreatedResponse({ type: Category })
   @ApiBadRequestResponse()

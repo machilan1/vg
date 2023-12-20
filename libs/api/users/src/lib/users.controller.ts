@@ -19,7 +19,7 @@ import {
 import { User } from '../entities/user.entity';
 import { UsersService } from './users.service';
 import { UpdateUserDto } from '../dtos/update-user.dto';
-import { JwtGuard } from '@vg/api-guards';
+import { AdminGuard, JwtGuard } from '@vg/api-guards';
 
 @ApiTags('users')
 @Controller('users')
@@ -63,7 +63,7 @@ export class UsersController {
 
   @Delete(':userId')
   @ApiBearerAuth()
-  @UseGuards(JwtGuard)
+  @UseGuards(JwtGuard, AdminGuard)
   @ApiOperation({ operationId: 'deleteUser' })
   @ApiOkResponse()
   @ApiBadRequestResponse()

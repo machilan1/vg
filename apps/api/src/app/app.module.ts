@@ -10,6 +10,7 @@ import { RecordsModule } from '@vg/api-records';
 import { FilesModule } from '@vg/files';
 import { JwtModule } from '@nestjs/jwt';
 import { AuthModule } from '@vg/api-auth';
+import { GuardsModule } from '@vg/api-guards';
 
 @Module({
   controllers: [],
@@ -23,6 +24,7 @@ import { AuthModule } from '@vg/api-auth';
     RecordsModule,
     FilesModule,
     AuthModule,
+    GuardsModule,
     ConfigModule.forRoot({ isGlobal: true }),
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, 'upload'),

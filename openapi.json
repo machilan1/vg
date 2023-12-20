@@ -625,14 +625,7 @@
             }
           },
           "201": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object"
-                }
-              }
-            }
+            "description": ""
           }
         },
         "tags": [
@@ -822,6 +815,38 @@
           }
         }
       },
+      "Record": {
+        "type": "object",
+        "properties": {
+          "recordId": {
+            "type": "number"
+          },
+          "productId": {
+            "type": "number"
+          },
+          "createdAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "unitPrice": {
+            "type": "number"
+          },
+          "unitOfMeasure": {
+            "type": "string"
+          },
+          "trackNumber": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "recordId",
+          "productId",
+          "createdAt",
+          "unitPrice",
+          "unitOfMeasure",
+          "trackNumber"
+        ]
+      },
       "Product": {
         "type": "object",
         "properties": {
@@ -840,7 +865,7 @@
           "records": {
             "type": "array",
             "items": {
-              "type": "object"
+              "$ref": "#/components/schemas/Record"
             }
           },
           "latestPrice": {
@@ -930,38 +955,6 @@
             "type": "string"
           }
         }
-      },
-      "Record": {
-        "type": "object",
-        "properties": {
-          "recordId": {
-            "type": "number"
-          },
-          "productId": {
-            "type": "number"
-          },
-          "createdAt": {
-            "format": "date-time",
-            "type": "string"
-          },
-          "unitPrice": {
-            "type": "number"
-          },
-          "unitOfMeasure": {
-            "type": "string"
-          },
-          "trackNumber": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "recordId",
-          "productId",
-          "createdAt",
-          "unitPrice",
-          "unitOfMeasure",
-          "trackNumber"
-        ]
       },
       "CreateRecordDto": {
         "type": "object",

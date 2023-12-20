@@ -69,6 +69,8 @@ export class ProductsController {
     return new Product(res);
   }
 
+  // owner only
+
   @Patch(':productId')
   @ApiBearerAuth()
   @UseGuards(JwtGuard)
@@ -80,8 +82,6 @@ export class ProductsController {
     const res = await this.productsService.update(productId, updateProductDto);
     return new Product(res);
   }
-
-  // Admin only
 
   @Delete(':productId')
   @ApiBearerAuth()
