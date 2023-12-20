@@ -1,4 +1,4 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable, Signal, inject } from '@angular/core';
 import { injectQuery } from '@tanstack/angular-query-experimental';
 import { AuthService, ProductsService, UsersService } from '@vg/oai';
 import { firstValueFrom } from 'rxjs';
@@ -33,11 +33,15 @@ export class SellerStateService {
     }));
   }
 
-  getProductById(productId: number) {
+  getProductById(productId: Signal<string>) {
     return injectQuery(() => ({
-      queryKey: ['products', productId],
+      queryKey: ['products', { productId: productId() }],
       queryFn: () =>
-        firstValueFrom(this.#productsService.getProductById({ productId })),
+        firstValueFrom(
+          this.#productsService.getProductById({
+            productId: Number(productId()),
+          }),
+        ),
     }));
   }
 

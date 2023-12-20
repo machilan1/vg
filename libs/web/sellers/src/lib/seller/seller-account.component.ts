@@ -1,8 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { SellerStateService } from './seller-state.service';
+import { JsonPipe } from '@angular/common';
 
 @Component({
   selector: 'vg-seller-account',
   template: `
+    <pre>{{ user | json }}</pre>
     <div class="w-full">
       <p>帳戶信箱</p>
       <p>公司名稱</p>
@@ -13,5 +16,12 @@ import { Component } from '@angular/core';
     </div>
   `,
   standalone: true,
+  imports: [JsonPipe],
 })
-export class SellerAccountComponent {}
+export class SellerAccountComponent {
+  #sellerStateService = inject(SellerStateService);
+
+  // user = this.#sellerStateService.fineMe();
+
+  user = this.#sellerStateService.getUser(1);
+}

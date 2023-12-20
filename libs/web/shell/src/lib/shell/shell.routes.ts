@@ -37,6 +37,13 @@ export const SHELL_ROUTES: Route[] = [
         path: 'admin',
         loadChildren: () => import('@vg/admin').then((m) => m.ADMIN_ROUTES),
       },
+      {
+        path: '**',
+        loadComponent: () =>
+          import('./pageNotFound.component').then(
+            (m) => m.PageNotFoundComponent,
+          ),
+      },
     ],
   },
 ];

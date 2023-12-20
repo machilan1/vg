@@ -19,11 +19,11 @@ export const SELLER_ROUTES: Route[] = [
         component: SellerProductsComponent,
       },
       {
-        path: 'product',
+        path: 'products/:productId',
         component: SellerProductComponent,
       },
       {
-        path: 'product/edit',
+        path: 'products/:productId/edit',
         component: SellerProductEditComponent,
       },
     ],

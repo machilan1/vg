@@ -27,14 +27,14 @@ import { RouterLink } from '@angular/router';
           />
         </div>
 
-        <!-- <div class="flex gap-4">
+        <div class="flex gap-4">
           <label class="w-20">產品圖片</label>
           <input
             type="image"
             formControlName="image"
             class="border border-green-800  bg-green-50 rounded-md"
           />
-        </div> -->
+        </div>
       </div>
 
       <div class="flex flex-col gap-2">
@@ -43,7 +43,39 @@ import { RouterLink } from '@angular/router';
           <label class="w-20">廠商名稱</label>
           <input
             type="text"
-            formControlName="seller"
+            formControlName="sellerName"
+            class="border border-green-800  bg-green-50 rounded-md"
+          />
+        </div>
+        <div class="flex gap-4">
+          <label class="w-20">廠商名稱</label>
+          <input
+            type="text"
+            formControlName="sellerTaxId"
+            class="border border-green-800  bg-green-50 rounded-md"
+          />
+        </div>
+        <div class="flex gap-4">
+          <label class="w-20">廠商名稱</label>
+          <input
+            type="text"
+            formControlName="sellerPhone"
+            class="border border-green-800  bg-green-50 rounded-md"
+          />
+        </div>
+        <div class="flex gap-4">
+          <label class="w-20">廠商名稱</label>
+          <input
+            type="text"
+            formControlName="sellerEmail"
+            class="border border-green-800  bg-green-50 rounded-md"
+          />
+        </div>
+        <div class="flex gap-4">
+          <label class="w-20">廠商名稱</label>
+          <input
+            type="text"
+            formControlName="sellerAddress"
             class="border border-green-800  bg-green-50 rounded-md"
           />
         </div>
@@ -60,27 +92,42 @@ import { RouterLink } from '@angular/router';
             新增
           </button>
         </div>
-        <ng-container formArrayName="histories">
-          @for ( history of histories.controls; track history; let i = $index )
-          {
-          <div class="flex gap-6" [formGroupName]="i">
-            <div class="flex gap-4 pt-2">
-              <label>日期</label>
-              <input
-                formControlName="date"
-                type="text"
-                class="border border-green-800  bg-green-50 rounded-md"
-              />
+        <ng-container formArrayName="records">
+          @for (history of records.controls; track history; let i = $index) {
+            <div class="flex gap-6" [formGroupName]="i">
+              <div class="flex gap-4 pt-2">
+                <label>日期</label>
+                <input
+                  formControlName="date"
+                  type="date"
+                  class="border border-green-800  bg-green-50 rounded-md"
+                />
+              </div>
+              <div class="flex gap-4 pt-2">
+                <label> 追蹤履歷號</label>
+                <input
+                  formControlName="trackNumber"
+                  type="text"
+                  class="border border-green-800  bg-green-50 rounded-md"
+                />
+              </div>
+              <div class="flex gap-4 pt-2">
+                <label>單位價格</label>
+                <input
+                  formControlName="unitPrice"
+                  type="text"
+                  class="border border-green-800  bg-green-50 rounded-md"
+                />
+              </div>
+              <div class="flex gap-4 pt-2">
+                <label>單位</label>
+                <input
+                  formControlName="unitOfMeasure"
+                  type="text"
+                  class="border border-green-800  bg-green-50 rounded-md"
+                />
+              </div>
             </div>
-            <div class="flex gap-4 pt-2">
-              <label>價錢</label>
-              <input
-                formControlName="price"
-                type="text"
-                class="border border-green-800  bg-green-50 rounded-md"
-              />
-            </div>
-          </div>
           }
         </ng-container>
       </div>
@@ -106,20 +153,27 @@ import { RouterLink } from '@angular/router';
 export class SellerProductEditComponent {
   form = new FormGroup({
     name: new FormControl('', Validators.required),
-    seller: new FormControl('', Validators.required),
-    histories: new FormArray<FormGroup>([]),
+    image: new FormControl('', Validators.required),
+    sellerName: new FormControl('', Validators.required),
+    sellerTaxId: new FormControl('', Validators.required),
+    sellerPhone: new FormControl('', Validators.required),
+    sellerEmail: new FormControl('', [Validators.required, Validators.email]),
+    sellerAddress: new FormControl('', Validators.required),
+    records: new FormArray([]),
   });
 
-  get histories() {
-    return this.form.get('histories') as FormArray;
+  get records() {
+    return this.form.get('records') as FormArray;
   }
 
   addHistory() {
-    this.histories.push(
+    this.records.push(
       new FormGroup({
         date: new FormControl('', Validators.required),
-        price: new FormControl('', Validators.required),
-      })
+        trackNumber: new FormControl('', Validators.required),
+        unitPrice: new FormControl('', Validators.required),
+        unitOfMeasure: new FormControl('', Validators.required),
+      }),
     );
   }
 

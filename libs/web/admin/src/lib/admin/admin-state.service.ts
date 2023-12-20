@@ -1,5 +1,5 @@
 import { user } from './../../../../../api/database/src/lib/schema';
-import { Injectable, inject } from '@angular/core';
+import { Injectable, Signal, inject } from '@angular/core';
 import { injectQuery } from '@tanstack/angular-query-experimental';
 import { Product, ProductsService, User, UsersService } from '@vg/oai';
 import { firstValueFrom } from 'rxjs';
@@ -18,10 +18,14 @@ export class AdminStateService {
     }));
   }
 
-  getUserById(userId: number) {
+  getUserById(userId: Signal<string>) {
     return injectQuery(() => ({
-      queryKey: ['users', userId],
-      queryFn: () => firstValueFrom(this.#usersService.findUser({ userId })),
+      queryKey: ['users', { userId: userId() }],
+      queryFn: () =>
+        firstValueFrom(
+          this.#usersService.findUser({ userId: Number(userId()) }),
+        ),
+      enabled: userId() !== '',
     }));
   }
 
@@ -47,11 +51,15 @@ export class AdminStateService {
     }));
   }
 
-  getProductById(productId: number) {
+  getProductById(productId: Signal<string>) {
     return injectQuery(() => ({
-      queryKey: ['products', productId],
+      queryKey: ['products', { productId: productId() }],
       queryFn: () =>
-        firstValueFrom(this.#productsService.getProductById({ productId })),
+        firstValueFrom(
+          this.#productsService.getProductById({
+            productId: Number(productId()),
+          }),
+        ),
     }));
   }
 

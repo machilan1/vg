@@ -12,6 +12,14 @@ import { AdminStateService } from './admin-state.service';
     } @else if (sellers.isError()) {
       <div>error</div>
     } @else {
+      <div class="w-full flex justify-end">
+        <button
+          class="bg-green-800 text-white rounded-md px-4 py-1"
+          routerLink="seller/new"
+        >
+          新增
+        </button>
+      </div>
       <mat-table [dataSource]="sellers.data()!" class="mat-elevation-z8">
         <ng-container matColumnDef="name">
           <mat-header-cell mat-header-cell *matHeaderCellDef>

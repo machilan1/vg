@@ -56,5 +56,11 @@ export const appConfig: ApplicationConfig = {
         rootUrl: 'http://127.0.0.1:4010',
       },
     },
+    // {
+    //   provide: ApiConfiguration,
+    //   useValue: {
+    //     rootUrl: 'http://localhost:3000',
+    //   },
+    // },
   ],
 };
