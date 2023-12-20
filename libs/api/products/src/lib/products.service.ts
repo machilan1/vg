@@ -5,6 +5,7 @@ import { eq } from 'drizzle-orm';
 import { CreateProductDto } from './dtos/create-product.dto';
 import { Product } from './entities/product.entity';
 import { UpdateProductDto } from './dtos/update-product.dto';
+import { generateSN } from '../../../records/src/lib/util/generate-sn';
 
 @Injectable()
 export class ProductsService {
@@ -19,18 +20,22 @@ export class ProductsService {
         .values(createProductPayload)
         .returning();
 
-      const insertRecords = records.map((record) => ({
-        ...record,
-        productId: productRes.productId,
-        trackNumber: generateSN(),
-      }));
+      if (records && records.length >= 1) {
+        const insertRecords = records.map((record) => ({
+          ...record,
+          productId: productRes.productId,
+          trackNumber: generateSN(),
+        }));
 
-      await tx.insert(record).values(insertRecords);
+        await tx.insert(record).values(insertRecords);
+      }
 
       const res = await tx.query.product.findFirst({
         columns: { categoryId: false, userId: false },
         with: {
-          records: true,
+          records: {
+            orderBy: (records, { desc }) => [desc(records.createdAt)],
+          },
           category: true,
           seller: { columns: { password: false } },
         },
@@ -47,7 +52,9 @@ export class ProductsService {
     const res = await this.conn.query.product.findMany({
       columns: { categoryId: false, userId: false },
       with: {
-        records: true,
+        records: {
+          orderBy: (records, { desc }) => [desc(records.createdAt)],
+        },
         category: true,
         seller: { columns: { password: false } },
       },
@@ -59,7 +66,10 @@ export class ProductsService {
     const res = await this.conn.query.product.findFirst({
       columns: { categoryId: false, userId: false },
       with: {
-        records: true,
+        records: {
+          orderBy: (records, { desc }) => [desc(records.createdAt)],
+          limit: 10,
+        },
         category: true,
         seller: { columns: { password: false } },
       },
@@ -71,19 +81,18 @@ export class ProductsService {
   }
 
   async update(id: number, body: UpdateProductDto) {
-    console.log('e04su3su;6', body);
-
     const abv = await this.conn
       .update(product)
       .set(body)
       .where(eq(product.productId, id))
       .returning();
-    console.log(1234);
 
     const res = await this.conn.query.product.findFirst({
       columns: { categoryId: false, userId: false },
       with: {
-        records: true,
+        records: {
+          orderBy: (records, { desc }) => [desc(records.createdAt)],
+        },
         category: true,
         seller: { columns: { password: false } },
       },
@@ -110,14 +119,4 @@ export class ProductsService {
   // }
   // return this.conn.select().from(product).where({ userId });
   // Util
-}
-function generateSN() {
-  const trackNumber =
-    new Date().toISOString() + Math.floor(Math.random() * 1000).toString();
-  const regex = /\d+/g;
-  const processed = trackNumber
-    .split('')
-    .filter((x) => x.match(regex))
-    .join('');
-  return processed;
 }

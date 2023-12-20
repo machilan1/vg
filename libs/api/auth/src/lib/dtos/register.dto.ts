@@ -1,16 +1,41 @@
 import { ApiProperty } from '@nestjs/swagger';
+import {
+  MAX_PASSWORD_LENGTH,
+  MIN_PASSWORD_LENGTH,
+  MIN_PHONE_NUMBER_LENGTH,
+  TAX_ID_LENGTH,
+} from '@vg/shared-constants';
+import {
+  IsEmail,
+  IsNotEmpty,
+  IsPhoneNumber,
+  MaxLength,
+  MinLength,
+} from 'class-validator';
 
 export class RegisterDto {
-  @ApiProperty({ type: String })
+  @IsNotEmpty()
+  @MinLength(1)
   name!: string;
-  @ApiProperty({ type: String })
+
+  @IsNotEmpty()
+  @IsEmail()
   email!: string;
-  @ApiProperty({ type: String })
+
+  @IsNotEmpty()
+  @MinLength(MIN_PASSWORD_LENGTH)
+  @MaxLength(MAX_PASSWORD_LENGTH)
   password!: string;
-  @ApiProperty({ type: String })
+
+  @IsNotEmpty()
   address!: string;
-  @ApiProperty({ type: String })
+
+  @IsNotEmpty()
+  @MinLength(MIN_PHONE_NUMBER_LENGTH)
   phone!: string;
-  @ApiProperty({ type: String })
+
+  @IsNotEmpty()
+  @MinLength(TAX_ID_LENGTH)
+  @MaxLength(TAX_ID_LENGTH)
   taxId!: string;
 }

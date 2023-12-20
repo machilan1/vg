@@ -100,7 +100,6 @@ export class AuthService {
   }
 
   async findMe(findMeDto: FindMeDto) {
-    console.log(123);
     const [res] = await this.conn
       .select({
         name: user.name,

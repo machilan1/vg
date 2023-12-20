@@ -146,6 +146,7 @@
             "required": true,
             "in": "query",
             "schema": {
+              "minimum": 1,
               "type": "number"
             }
           }
@@ -373,7 +374,14 @@
         ],
         "responses": {
           "200": {
-            "description": ""
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Product"
+                }
+              }
+            }
           },
           "404": {
             "description": "Product not found"
@@ -636,7 +644,9 @@
         "type": "object",
         "properties": {
           "name": {
-            "type": "string"
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 10
           }
         },
         "required": [
@@ -647,22 +657,28 @@
         "type": "object",
         "properties": {
           "name": {
-            "type": "string"
+            "type": "string",
+            "minLength": 1
           },
           "email": {
             "type": "string"
           },
           "password": {
-            "type": "string"
+            "type": "string",
+            "minLength": 6,
+            "maxLength": 50
           },
           "address": {
             "type": "string"
           },
           "phone": {
-            "type": "string"
+            "type": "string",
+            "minLength": 6
           },
           "taxId": {
-            "type": "string"
+            "type": "string",
+            "minLength": 8,
+            "maxLength": 8
           }
         },
         "required": [
@@ -692,7 +708,9 @@
             "type": "string"
           },
           "password": {
-            "type": "string"
+            "type": "string",
+            "minLength": 6,
+            "maxLength": 50
           }
         },
         "required": [
@@ -787,7 +805,9 @@
         "properties": {
           "name": {
             "type": "string",
-            "nullable": true
+            "nullable": true,
+            "minLength": 1,
+            "maxLength": 30
           },
           "address": {
             "type": "string",
@@ -795,19 +815,16 @@
           },
           "phone": {
             "type": "string",
-            "nullable": true
+            "nullable": true,
+            "minLength": 6
           },
           "taxId": {
             "type": "string",
-            "nullable": true
+            "nullable": true,
+            "minLength": 8,
+            "maxLength": 8
           }
-        },
-        "required": [
-          "name",
-          "address",
-          "phone",
-          "taxId"
-        ]
+        }
       },
       "Record": {
         "type": "object",
@@ -856,14 +873,17 @@
           "image": {
             "type": "string"
           },
-          "seller": {
-            "$ref": "#/components/schemas/User"
-          },
           "records": {
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/Record"
             }
+          },
+          "latestPrice": {
+            "type": "number"
+          },
+          "seller": {
+            "$ref": "#/components/schemas/User"
           },
           "createdAt": {
             "format": "date-time",
@@ -875,31 +895,51 @@
           "category",
           "name",
           "image",
-          "seller",
           "records",
+          "seller",
           "createdAt"
+        ]
+      },
+      "InitialRecordDto": {
+        "type": "object",
+        "properties": {
+          "unitOfMeasure": {
+            "type": "string"
+          },
+          "unitPrice": {
+            "type": "number",
+            "minimum": 1
+          }
+        },
+        "required": [
+          "unitOfMeasure",
+          "unitPrice"
         ]
       },
       "CreateProductDto": {
         "type": "object",
         "properties": {
           "userId": {
-            "type": "number"
+            "type": "number",
+            "minimum": 1
           },
           "name": {
-            "type": "string"
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
           },
           "image": {
             "type": "string"
           },
           "categoryId": {
-            "type": "number"
+            "type": "number",
+            "minimum": 1
           },
           "records": {
             "default": [],
             "type": "array",
             "items": {
-              "type": "object"
+              "$ref": "#/components/schemas/InitialRecordDto"
             }
           }
         },
@@ -907,18 +947,20 @@
           "userId",
           "name",
           "image",
-          "categoryId",
-          "records"
+          "categoryId"
         ]
       },
       "UpdateProductDto": {
         "type": "object",
         "properties": {
           "categoryId": {
-            "type": "number"
+            "type": "number",
+            "minimum": 1
           },
           "name": {
-            "type": "string"
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
           },
           "image": {
             "type": "string"
@@ -929,21 +971,19 @@
         "type": "object",
         "properties": {
           "productId": {
-            "type": "number"
-          },
-          "trackNumber": {
-            "type": "string"
+            "type": "number",
+            "minimum": 1
           },
           "unitOfMeasure": {
             "type": "string"
           },
           "unitPrice": {
-            "type": "number"
+            "type": "number",
+            "minimum": 1
           }
         },
         "required": [
           "productId",
-          "trackNumber",
           "unitOfMeasure",
           "unitPrice"
         ]
@@ -951,15 +991,9 @@
       "UpdateRecordDto": {
         "type": "object",
         "properties": {
-          "date": {
-            "format": "date-time",
-            "type": "string"
-          },
-          "trackNumber": {
-            "type": "number"
-          },
           "unitPrice": {
-            "type": "number"
+            "type": "number",
+            "minimum": 1
           },
           "unitOfMeasure": {
             "type": "string"

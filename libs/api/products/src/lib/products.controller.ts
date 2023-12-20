@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  NotFoundException,
   Param,
   ParseIntPipe,
   Patch,
@@ -31,8 +32,10 @@ export class ProductsController {
   @ApiNotFoundResponse({
     description: 'No products found',
   })
-  getData(): Promise<Product[]> {
-    return this.productsService.find();
+  async getData(): Promise<Product[]> {
+    const findRes = await this.productsService.find();
+    const res = findRes.map((entry) => new Product(entry));
+    return res;
   }
 
   @Get(':productId')
@@ -40,8 +43,12 @@ export class ProductsController {
   @ApiNotFoundResponse({
     description: 'Product not found',
   })
-  getProduct(@Param('productId', ParseIntPipe) id: number) {
-    return this.productsService.findOne(id);
+  async getProduct(@Param('productId', ParseIntPipe) id: number) {
+    const res = await this.productsService.findOne(id);
+    if (!res) {
+      throw new NotFoundException();
+    }
+    return new Product(res!);
   }
 
   @Post()
@@ -51,7 +58,7 @@ export class ProductsController {
   })
   async create(@Body() body: CreateProductDto): Promise<Product> {
     const res = await this.productsService.create(body);
-    return res;
+    return new Product(res);
   }
 
   @Patch(':productId')
@@ -60,8 +67,6 @@ export class ProductsController {
     @Param('productId', ParseIntPipe) productId: number,
     @Body() updateProductDto: UpdateProductDto,
   ): Promise<Product> {
-    console.log(123456);
-    console.log(updateProductDto);
     const res = await this.productsService.update(productId, updateProductDto);
     console.log(res);
     return res;

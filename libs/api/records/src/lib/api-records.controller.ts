@@ -10,6 +10,7 @@ import {
   Controller,
   Delete,
   Get,
+  NotFoundException,
   Param,
   ParseIntPipe,
   Patch,
@@ -23,16 +24,17 @@ import { UpdateRecordDto } from './dtos/update-record.dto';
 @ApiTags('records')
 @Controller('records')
 export class ApiRecordsController {
-  constructor(private readonly recordService: RecordsService) {}
+  constructor(private readonly recordsService: RecordsService) {}
 
   @Get()
   @ApiOperation({ operationId: 'getRecords' })
   @ApiNotFoundResponse({
     description: 'No products found',
   })
-  getData(): Promise<Record[]> {
-    // return this.recordsService.find();
-    throw new Error('no implemented');
+  async getData(): Promise<Record[]> {
+    const res = await this.recordsService.findMany();
+    const processed = res.map((entry) => new Record(entry));
+    return processed;
   }
 
   @Get(':recordId')
@@ -40,9 +42,14 @@ export class ApiRecordsController {
   @ApiNotFoundResponse({
     description: 'Record not found',
   })
-  getRecord(@Param('recordId', ParseIntPipe) id: number): Promise<Record> {
-    throw new Error('no implemented');
-    // return this.RecordsService.findOne(id);
+  async getRecord(
+    @Param('recordId', ParseIntPipe) id: number,
+  ): Promise<Record> {
+    const res = await this.recordsService.findOne(id);
+    if (!res) {
+      throw new NotFoundException('record not found');
+    }
+    return new Record(res);
   }
 
   @Post()
@@ -50,26 +57,25 @@ export class ApiRecordsController {
   @ApiBadRequestResponse({
     description: 'Bad request',
   })
-  create(@Body() body: CreateRecordDto): Promise<Record> {
-    throw new Error('no implemented');
-    // return this.RecordsService.create();
+  async create(@Body() body: CreateRecordDto): Promise<Record> {
+    const res = await this.recordsService.create(body);
+    return new Record(res);
   }
 
   @Patch(':recordId')
   @ApiOperation({ operationId: 'updateRecord' })
-  update(
+  async update(
     @Param('recordId') recordId: number,
     @Body() body: UpdateRecordDto,
   ): Promise<Record> {
-    throw new Error('no implemented');
-    // return this.RecordsService.update(id, body);
+    const res = await this.recordsService.update(recordId, body);
+    return new Record(res);
   }
 
   @Delete(':recordId')
   @ApiOperation({ operationId: 'deleteRecord' })
   @HttpCode(204)
   delete(@Param('recordId') id: number): Promise<void> {
-    throw new Error('no implemented');
-    // return this.RecordsService.delete(id);
+    return this.recordsService.delete(id);
   }
 }

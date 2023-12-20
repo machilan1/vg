@@ -41,7 +41,7 @@ export type InsertCategory = InferInsertModel<typeof category>;
 export const product = pgTable('product', {
   productId: bigserial('product_id', { mode: 'number' }).primaryKey().notNull(),
   userId: integer('user_id')
-    .references(() => user.userId)
+    .references(() => user.userId, { onDelete: 'cascade' })
     .notNull(),
   categoryId: integer('category_id')
     .references(() => category.categoryId)
