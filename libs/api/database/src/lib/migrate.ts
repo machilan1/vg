@@ -15,7 +15,7 @@ async function main() {
     connectionString: dbUrl,
   });
   const db = drizzle(pool);
-  const dir = __dirname + '/migrations';
+  const dir = __dirname + '/migration';
   await migrate(db, {
     migrationsFolder: dir,
   });

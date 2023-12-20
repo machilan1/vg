@@ -22,7 +22,7 @@ import { SellerStateService } from './seller-state.service';
               <h3 class="text-lg font-semibold">
                 產品名稱 {{ product.data()!.name }}
               </h3>
-              <p>最新價格 {{ product.data()!.price }}</p>
+              <p>最新價格 {{ product.data()!.latestPrice }}</p>
             </div>
             <div>
               <h3 class="text-lg font-semibold">產銷履歷</h3>

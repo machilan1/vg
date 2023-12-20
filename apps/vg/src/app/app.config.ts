@@ -50,17 +50,17 @@ export const appConfig: ApplicationConfig = {
     ),
 
     // TODO: set codegen config - api base url (1. mock server / 2. development server)
-    {
-      provide: ApiConfiguration,
-      useValue: {
-        rootUrl: 'http://127.0.0.1:4010',
-      },
-    },
     // {
     //   provide: ApiConfiguration,
     //   useValue: {
-    //     rootUrl: 'http://localhost:3000',
+    //     rootUrl: 'http://127.0.0.1:4010',
     //   },
     // },
+    {
+      provide: ApiConfiguration,
+      useValue: {
+        rootUrl: 'http://localhost:3000',
+      },
+    },
   ],
 };

@@ -6,17 +6,16 @@ import { filter, map } from 'rxjs/operators';
 import { StrictHttpResponse } from '../../strict-http-response';
 import { RequestBuilder } from '../../request-builder';
 
-import { FindMeDto } from '../../models/find-me-dto';
 import { FindMeResponse } from '../../models/find-me-response';
 
 export interface FindMe$Params {
-      body: FindMeDto
+  userId: number;
 }
 
 export function findMe(http: HttpClient, rootUrl: string, params: FindMe$Params, context?: HttpContext): Observable<StrictHttpResponse<FindMeResponse>> {
   const rb = new RequestBuilder(rootUrl, findMe.PATH, 'get');
   if (params) {
-    rb.body(params.body, 'application/json');
+    rb.query('userId', params.userId, {});
   }
 
   return http.request(

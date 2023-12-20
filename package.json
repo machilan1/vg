@@ -5,7 +5,7 @@
   "scripts": {
     "oai": "ng-openapi-gen --input openapi.json --output libs/shared/oai/src/lib --indexFile=true",
     "generate:migration": "npx drizzle-kit generate:pg --config=./libs/api/database/src/lib/config.ts ",
-    "migrate": "npx tsx ./apps/api/libs/shared/src/lib/drizzle/migrate.ts",
+    "migrate": "npx tsx ./libs/api/database/src/lib/migrate.ts",
     "mock": "prism mock -d --json-schema-faker-fillProperties=false openapi.json"
   },
   "private": true,

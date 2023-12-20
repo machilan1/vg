@@ -14,7 +14,8 @@ export class SellerStateService {
   fineMe() {
     return injectQuery(() => ({
       queryKey: ['me'],
-      queryFn: () => firstValueFrom(this.#authService.findMe()),
+      // todo Add user id
+      queryFn: () => firstValueFrom(this.#authService.findMe({ userId: 1 })),
     }));
   }
 

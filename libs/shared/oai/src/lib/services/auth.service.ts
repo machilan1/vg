@@ -81,7 +81,7 @@ export class AuthService extends BaseService {
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
    * To access only the response body, use `findMe()` instead.
    *
-   * This method sends `application/json` and handles request body of type `application/json`.
+   * This method doesn't expect any request body.
    */
   findMe$Response(params: FindMe$Params, context?: HttpContext): Observable<StrictHttpResponse<FindMeResponse>> {
     return findMe(this.http, this.rootUrl, params, context);
@@ -91,7 +91,7 @@ export class AuthService extends BaseService {
    * This method provides access only to the response body.
    * To access the full response (for headers, for example), `findMe$Response()` instead.
    *
-   * This method sends `application/json` and handles request body of type `application/json`.
+   * This method doesn't expect any request body.
    */
   findMe(params: FindMe$Params, context?: HttpContext): Observable<FindMeResponse> {
     return this.findMe$Response(params, context).pipe(

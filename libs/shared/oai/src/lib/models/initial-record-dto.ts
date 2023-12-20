@@ -1,7 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
-export interface CreateRecordDto {
-  productId: number;
+export interface InitialRecordDto {
   unitOfMeasure: string;
   unitPrice: number;
 }

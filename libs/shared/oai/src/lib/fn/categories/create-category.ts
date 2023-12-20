@@ -6,18 +6,16 @@ import { filter, map } from 'rxjs/operators';
 import { StrictHttpResponse } from '../../strict-http-response';
 import { RequestBuilder } from '../../request-builder';
 
-import { Product } from '../../models/product';
-import { UpdateProductDto } from '../../models/update-product-dto';
+import { Category } from '../../models/category';
+import { CreateCategoryDto } from '../../models/create-category-dto';
 
-export interface UpdateProduct$Params {
-  productId: number;
-      body: UpdateProductDto
+export interface CreateCategory$Params {
+      body: CreateCategoryDto
 }
 
-export function updateProduct(http: HttpClient, rootUrl: string, params: UpdateProduct$Params, context?: HttpContext): Observable<StrictHttpResponse<Product>> {
-  const rb = new RequestBuilder(rootUrl, updateProduct.PATH, 'patch');
+export function createCategory(http: HttpClient, rootUrl: string, params: CreateCategory$Params, context?: HttpContext): Observable<StrictHttpResponse<Category>> {
+  const rb = new RequestBuilder(rootUrl, createCategory.PATH, 'post');
   if (params) {
-    rb.path('productId', params.productId, {});
     rb.body(params.body, 'application/json');
   }
 
@@ -26,9 +24,9 @@ export function updateProduct(http: HttpClient, rootUrl: string, params: UpdateP
   ).pipe(
     filter((r: any): r is HttpResponse<any> => r instanceof HttpResponse),
     map((r: HttpResponse<any>) => {
-      return r as StrictHttpResponse<Product>;
+      return r as StrictHttpResponse<Category>;
     })
   );
 }
 
-updateProduct.PATH = '/products/{productId}';
+createCategory.PATH = '/categories';
