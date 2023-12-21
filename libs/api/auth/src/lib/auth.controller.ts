@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Patch,
+  Post,
+  Req,
+  UseGuards,
+} from '@nestjs/common';
 import {
   ApiBearerAuth,
   ApiOkResponse,
@@ -13,6 +21,7 @@ import { FindMeResponse } from './responses/find-me.response';
 import { JwtGuard } from '@vg/api-guards';
 import { UsersService } from '@vg/api-users';
 import { User } from 'libs/api/users/src/entities/user.entity';
+import { AssignAdminDto } from './dtos/assign-admin.dto';
 
 @ApiTags('auth')
 @Controller('auth')
@@ -46,4 +55,10 @@ export class AuthController {
     const res = await this.usersService.findOne(userId);
     return new User(res);
   }
+
+  // @Patch('assignAdmin')
+  // async assignAdmin(@Body() assignAdminDto: AssignAdminDto) {
+  //   const res = await this.authService.assignAdmin(assignAdminDto);
+  //   return res;
+  // }
 }

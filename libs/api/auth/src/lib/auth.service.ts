@@ -8,6 +8,7 @@ import { LoginDto } from './dtos/login.dto';
 import { LOGIN_FAIL } from '@vg/shared-constants';
 import { eq } from 'drizzle-orm';
 import { UsersService } from '@vg/api-users';
+import { AssignAdminDto } from './dtos/assign-admin.dto';
 
 @Injectable()
 export class AuthService {
@@ -61,6 +62,19 @@ export class AuthService {
       return { jwt };
     } catch (err) {
       return new BadRequestException(err);
+    }
+  }
+
+  async assignAdmin(assignAdminDto: AssignAdminDto) {
+    try {
+      const res = await this.conn
+        .update(user)
+        .set(assignAdminDto)
+        .where(eq(user.userId, assignAdminDto.userId))
+        .returning({ isAdmin: user.isAdmin });
+      return res;
+    } catch (err) {
+      throw new BadRequestException();
     }
   }
 
