@@ -1,11 +1,10 @@
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { Database, PG_CONNECTION, record } from '@vg/api-database';
-import { Relation, eq } from 'drizzle-orm';
+import { eq } from 'drizzle-orm';
 import { CreateRecordDto } from './dtos/create-record.dto';
 import { UpdateRecordDto } from './dtos/update-record.dto';
 import { generateSN } from './util/generate-sn';
 import { Record } from './entities/record.entity';
-import { NotFoundError } from 'rxjs';
 
 @Injectable()
 export class RecordsService {
