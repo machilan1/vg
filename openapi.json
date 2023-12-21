@@ -701,6 +701,30 @@
           }
         ]
       }
+    },
+    "/auth/assignAdmin": {
+      "patch": {
+        "operationId": "AuthController_assignAdmin",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AssignAdminDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "auth"
+        ]
+      }
     }
   },
   "info": {
@@ -908,10 +932,6 @@
       "CreateProductDto": {
         "type": "object",
         "properties": {
-          "userId": {
-            "type": "number",
-            "minimum": 1
-          },
           "name": {
             "type": "string",
             "minLength": 1,
@@ -933,7 +953,6 @@
           }
         },
         "required": [
-          "userId",
           "name",
           "image",
           "categoryId"
@@ -1103,6 +1122,22 @@
           "taxId",
           "isAdmin",
           "createdAt"
+        ]
+      },
+      "AssignAdminDto": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "number",
+            "minimum": 1
+          },
+          "isAdmin": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "userId",
+          "isAdmin"
         ]
       }
     }

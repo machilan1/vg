@@ -56,9 +56,9 @@ export class AuthController {
     return new User(res);
   }
 
-  // @Patch('assignAdmin')
-  // async assignAdmin(@Body() assignAdminDto: AssignAdminDto) {
-  //   const res = await this.authService.assignAdmin(assignAdminDto);
-  //   return res;
-  // }
+  @Patch('assignAdmin')
+  async assignAdmin(@Body() assignAdminDto: AssignAdminDto) {
+    const res = await this.authService.assignAdmin(assignAdminDto);
+    return res;
+  }
 }

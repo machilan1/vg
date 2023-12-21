@@ -9,6 +9,7 @@ import {
   Patch,
   Post,
   Query,
+  Req,
   UseGuards,
 } from '@nestjs/common';
 import { ProductsService } from './products.service';
@@ -64,8 +65,9 @@ export class ProductsController {
   @ApiBadRequestResponse({
     description: 'Bad request',
   })
-  async create(@Body() body: CreateProductDto): Promise<Product> {
-    const res = await this.productsService.create(body);
+  async create(@Body() body: CreateProductDto, @Req() req): Promise<Product> {
+    const { userId } = req['user'];
+    const res = await this.productsService.create(userId, body);
     return new Product(res);
   }
 

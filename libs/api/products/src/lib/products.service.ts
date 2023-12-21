@@ -15,14 +15,17 @@ export class ProductsService {
 
   // find a way to refactor repetetive codes
 
-  async create(createProductDto: CreateProductDto): Promise<Product> {
+  async create(
+    userId: number,
+    createProductDto: CreateProductDto,
+  ): Promise<Product> {
     const { records, ...createProductPayload } = createProductDto;
 
     const res = await this.conn.transaction(async (tx) => {
       const [productRes] = await tx
         .insert(product)
-        .values(createProductPayload)
-        .returning();
+        .values({ ...createProductPayload, userId })
+        .returning({ productId: product.productId });
 
       if (records && records.length >= 1) {
         const insertRecords = records.map((record) => ({

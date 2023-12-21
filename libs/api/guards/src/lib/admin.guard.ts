@@ -4,6 +4,7 @@ import {
   Injectable,
   UnauthorizedException,
   Inject,
+  InternalServerErrorException,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { PG_CONNECTION, user } from '@vg/api-database';
@@ -48,8 +49,7 @@ export class AdminGuard implements CanActivate {
         throw new UnauthorizedException();
       }
     } catch (err) {
-      console.log(err);
-      throw new UnauthorizedException();
+      throw new InternalServerErrorException();
     }
     return true;
   }

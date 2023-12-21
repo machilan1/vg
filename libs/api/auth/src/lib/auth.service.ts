@@ -1,4 +1,11 @@
-import { BadRequestException, Inject, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  ConflictException,
+  Inject,
+  Injectable,
+  InternalServerErrorException,
+  NotFoundException,
+} from '@nestjs/common';
 import { Database, PG_CONNECTION, user } from '@vg/api-database';
 import { RegisterDto } from './dtos/register.dto';
 import { JwtService } from '@nestjs/jwt';
@@ -9,6 +16,7 @@ import { LOGIN_FAIL } from '@vg/shared-constants';
 import { eq } from 'drizzle-orm';
 import { UsersService } from '@vg/api-users';
 import { AssignAdminDto } from './dtos/assign-admin.dto';
+import { PostgresError } from 'postgres';
 
 @Injectable()
 export class AuthService {
@@ -24,9 +32,13 @@ export class AuthService {
     const newUser = { ...registerDto, password: secret };
 
     try {
-      const [res] = await this.conn.insert(user).values(newUser).returning();
+      const [res] = await this.conn
+        .insert(user)
+        .values(newUser)
+        .returning({ userId: user.userId });
+
       if (!res) {
-        throw 'Register Failed';
+        throw new ConflictException();
       }
 
       const jwt = await this.jwtService.signAsync({ userId: res.userId });
@@ -34,35 +46,48 @@ export class AuthService {
       return { jwt };
     } catch (err) {
       console.log(err);
-      throw new BadRequestException();
+      if (err instanceof PostgresError) {
+        if (err.code === '23505') {
+          throw new ConflictException(
+            'Please use a different value for Tax ID or email',
+          );
+        }
+      }
+      throw new InternalServerErrorException();
     }
   }
   async login(loginDto: LoginDto) {
     try {
       const user = await this.userService.findOneByEmail(loginDto.email);
       if (!user) {
-        throw new Error(LOGIN_FAIL);
+        throw new ConflictException(LOGIN_FAIL);
       }
 
       const hash = await this.#getUserHash(user.userId);
 
       if (!hash) {
-        throw new Error(LOGIN_FAIL);
+        throw new ConflictException(LOGIN_FAIL);
       }
 
       const matches = this.checkPassword(loginDto.password, hash);
       if (!matches) {
         console.group('Not match');
-        throw new Error(LOGIN_FAIL);
+        throw new ConflictException(LOGIN_FAIL);
       }
 
       const jwt = await this.jwtService.signAsync({ userId: user.userId });
       if (!jwt) {
-        throw new Error(LOGIN_FAIL);
+        throw new ConflictException(LOGIN_FAIL);
       }
       return { jwt };
     } catch (err) {
-      return new BadRequestException(err);
+      if (err instanceof ConflictException) {
+        if (err.getStatus() === 409) {
+          throw err;
+        }
+      }
+
+      throw new InternalServerErrorException();
     }
   }
 
@@ -73,9 +98,19 @@ export class AuthService {
         .set(assignAdminDto)
         .where(eq(user.userId, assignAdminDto.userId))
         .returning({ isAdmin: user.isAdmin });
+
+      if (res.length === 0) {
+        throw new NotFoundException();
+      }
+
       return res;
     } catch (err) {
-      throw new BadRequestException();
+      console.log(err);
+      if (err instanceof NotFoundException) {
+        throw err;
+      }
+
+      throw new ConflictException();
     }
   }
 

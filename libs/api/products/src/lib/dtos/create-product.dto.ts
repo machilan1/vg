@@ -14,9 +14,6 @@ import {
 } from 'class-validator';
 
 export class CreateProductDto {
-  @IsPositive()
-  userId!: number;
-
   @MinLength(MIN_PRODUCT_NAME_LENGTH)
   @MaxLength(MAX_PRODUCT_NAME_LENGTH)
   name!: string;
