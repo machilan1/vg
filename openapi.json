@@ -850,6 +850,12 @@
       "Product": {
         "type": "object",
         "properties": {
+          "records": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Record"
+            }
+          },
           "productId": {
             "type": "number"
           },
@@ -861,12 +867,6 @@
           },
           "image": {
             "type": "string"
-          },
-          "records": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Record"
-            }
           },
           "latestPrice": {
             "type": "number"
@@ -880,11 +880,11 @@
           }
         },
         "required": [
+          "records",
           "productId",
           "category",
           "name",
           "image",
-          "records",
           "seller",
           "createdAt"
         ]
