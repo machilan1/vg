@@ -32,6 +32,7 @@ export class AuthService {
 
       return { jwt };
     } catch (err) {
+      console.log(err);
       throw new BadRequestException();
     }
   }

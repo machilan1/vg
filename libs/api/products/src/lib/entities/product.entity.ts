@@ -1,6 +1,8 @@
 import { Record } from '@vg/api-records';
 import { User } from 'libs/api/users/src/entities/user.entity';
 import { Category } from 'libs/api/categories/src/entities/select-category.entity';
+import { Type } from 'class-transformer';
+import { ApiProperty } from '@nestjs/swagger';
 
 export class Product {
   productId!: number;
@@ -11,6 +13,7 @@ export class Product {
 
   image!: string;
 
+  @ApiProperty({ type: [Record] })
   records!: Record[];
 
   latestPrice?: number;
